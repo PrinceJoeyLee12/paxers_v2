@@ -1,4 +1,4 @@
-import { IUserMutationArgs } from '../../../../../typings';
+import { IUserLoginMutationArgs, IUserLoginObject } from 'pxrs-schemas';
 
 import { DynamoDB } from 'aws-sdk';
 import bcrypt from 'bcryptjs';
@@ -8,12 +8,12 @@ import { ApolloError } from 'apollo-server-lambda';
 interface Response {
   message: string;
   token?: string;
-  user?: any;
+  user?: IUserLoginObject;
 }
 
 async function validateUserMutation(
   _: any,
-  args: IUserMutationArgs
+  args: IUserLoginMutationArgs
 ): Promise<Response> {
   const {
     input: { email, password },
@@ -50,9 +50,9 @@ async function validateUserMutation(
             {
               expiresIn: process.env.TOKEN_FOR_AUTH_EXPIRATION,
             },
-            (err, Responsetoken) => {
+            (err, responseToken) => {
               if (!err) {
-                response.token = Responsetoken;
+                response.token = responseToken;
                 response.message = 'User Successfully authenticated';
                 response.user = data.Item;
                 response.user.password = 'hidden'; /*hide password to client*/

@@ -1,6 +1,9 @@
 import { Handler } from 'aws-lambda';
 import AWS from 'aws-sdk';
-import { deleteMessageFromQueue } from '../../utils/sqs/sqsFunctions';
+import {
+  SEND_ACCOUNT_ACTIVATION_EMAIL,
+  renderFileType,
+} from 'pxrs-service-common';
 
 const emailSenderFunction: Handler = (event) => {
   const ses = new AWS.SES({ apiVersion: '2010-12-01' });
@@ -30,11 +33,11 @@ const emailSenderFunction: Handler = (event) => {
           Html: {
             // HTML Format of the email
             Charset: 'UTF-8',
-            Data: `<html><body><h1>Hello  ${parsedBody.firstName}</h1><p style='color:red'>Sample description</p> <p>Time 1517831318946</p></body></html>`,
+            Data: `${renderFileType(typeOfEmail, parsedBody.firstName)}`,
           },
           Text: {
             Charset: 'UTF-8',
-            Data: `Hello ${parsedBody.firstName} Sample description time 1517831318946`,
+            Data: `Hello ${parsedBody.firstName}`,
           },
         },
         Subject: {

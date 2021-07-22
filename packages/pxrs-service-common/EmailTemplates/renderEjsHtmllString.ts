@@ -22,7 +22,7 @@ const HtmlString = async (data: any, emailType: string) => {
   switch (emailType) {
     case SEND_ACCOUNT_ACTIVATION_EMAIL: {
       return renderFile(
-        path.join(__dirname, '/view/AcountActivationEmail.ejs'),
+        path.join(__dirname, '/view/AccountActivationEmail.ejs'),
         data
       );
     }

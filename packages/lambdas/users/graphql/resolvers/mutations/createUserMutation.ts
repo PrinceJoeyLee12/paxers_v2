@@ -10,7 +10,7 @@ import {
   IEmailSenderArgs,
 } from 'pxrs-schemas';
 import { sendMessage } from '../../../../utils/sqs/sqsFunctions';
-import { SEND_ACCOUNT_ACTIVATION_EMAIL } from '../../../../utils/emailTemplates/emailTypes';
+import { SEND_ACCOUNT_ACTIVATION_EMAIL } from 'pxrs-service-common';
 
 interface Response {
   message: string;
