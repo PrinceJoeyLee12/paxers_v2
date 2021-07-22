@@ -6,9 +6,12 @@
   "private": true,
   "scripts": {
     "deploy": "serverless deploy",
+    "deploy:user": "sls deploy --config serverless_user.yml",
     "UploadSesTemplates": "npm run ",
     "dev": "serverless offline --apiKey d41d8cd98f00b204e9800998ecf8427e",
-    "lint": "tslint -p tsconfig.json -c tslint.json"
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "dev-deploy-user": "./serverless.sh deploy -v -c serverless_user.yml",
+    "dev-deploy-user-force": "./serverless.sh deploy -v --force -c serverless_user.yml"
   },
   "dependencies": {
     "apollo-server-lambda": "^2.16.1",
