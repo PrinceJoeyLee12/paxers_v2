@@ -1,9 +1,9 @@
 {
   "name": "pxrs-schemas",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "paxers schemas and types",
   "main": "dist/index.js",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "files": [
     "dist/**/*",
     "types/**/*",
@@ -19,5 +19,5 @@
     "type": "git",
     "url": ""
   },
-  "author": "paxers"
+  "author": "Prince Joey Lee"
 }

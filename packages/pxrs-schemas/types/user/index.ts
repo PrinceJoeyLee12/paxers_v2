@@ -1,2 +1,5 @@
-export { IUserMutationArgs, IDummyQueryArgs, IDummyObject } from './UserArgs';
-export { IUserObject } from './UserObject';
+export {
+  IUserRegistrationMutationArgs,
+  IUserLoginMutationArgs,
+} from './UserArgs';
+export { IUserRegistrationObject, IUserLoginObject } from './UserObject';

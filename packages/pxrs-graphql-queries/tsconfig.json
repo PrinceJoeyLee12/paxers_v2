@@ -1,0 +1,10 @@
+{
+  "extends": "../base-node-tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "lib": ["es2020"]
+}
