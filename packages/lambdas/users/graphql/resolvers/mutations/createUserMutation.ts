@@ -7,6 +7,7 @@ import { ApolloError } from 'apollo-server-lambda';
 import {
   IUserRegistrationMutationArgs,
   IUserRegistrationObject,
+  IEmailSenderArgs,
 } from 'pxrs-schemas';
 import { sendMessage } from '../../../../utils/sqs/sqsFunctions';
 import { SEND_ACCOUNT_ACTIVATION_EMAIL } from '../../../../utils/emailTemplates/emailTypes';
