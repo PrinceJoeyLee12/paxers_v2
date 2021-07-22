@@ -1,2 +1,8 @@
 import { gql } from 'apollo-server-lambda';
-import {} from 'pxrs-graphql-queries';
+import {
+  UserInput,
+  UserMutations,
+  UserObject,
+  UserQueries,
+  UserResponseObject,
+} from 'pxrs-graphql-queries';

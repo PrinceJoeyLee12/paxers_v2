@@ -4,7 +4,6 @@
     "baseUrl": ".",
     "declaration": true,
     "outDir": "./dist",
-    "rootDir": "./src"
   },
   "lib": ["es2020"]
 }
