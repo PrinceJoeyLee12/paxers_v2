@@ -38,16 +38,16 @@ provider:
   
 functions:
   user-create:  
-    name: ${sls:stage}-user-create-function
-    handler: src/handler.GraphqlHandler
+    name: ${self:provider.stage}-user-create-function
+    handler: handler.GraphqlHandler
     events:
       - http:
           private: true
           path: /graphql/user/create
           method: post
   user-validate:  
-    name: ${sls:stage}-user-validate-function
-    handler: src/handler.GraphqlHandler
+    name: ${self:provider.stage}-user-validate-function
+    handler: handler.GraphqlHandler
     events:
       - http:
           private: true
@@ -58,16 +58,16 @@ functions:
           path: /graphql/user/validate
           method: get
   user-reset-password:  
-    name: ${sls:stage}-user-reset-password-function
-    handler: src/handler.GraphqlHandler
+    name: ${self:provider.stage}-user-reset-password-function
+    handler: handler.GraphqlHandler
     events:
       - http:
           private: true
           path: /graphql/user/reset-password
           method: post
   send-email:
-    name: ${sls:stage}-send-email-function
-    handler: src/handler.EmailSenderHandler
+    name: ${self:provider.stage}-send-email-function
+    handler: handler.EmailSenderHandler
     events:
       - sqs: 
           arn: "arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:${self:custom.sqs.emailSenderQueue}"
