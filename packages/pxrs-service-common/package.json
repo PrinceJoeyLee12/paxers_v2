@@ -1,6 +1,6 @@
 {
   "name": "pxrs-service-common",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Common Services ",
   "main": "index.ts",
   "scripts": {

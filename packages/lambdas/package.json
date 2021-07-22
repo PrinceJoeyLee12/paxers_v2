@@ -1,6 +1,6 @@
 {
   "name": "paxers",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Paxers Application uses serverless lambda in backend",
   "main": "handler.js",
   "private": true,
