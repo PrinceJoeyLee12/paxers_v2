@@ -1,0 +1,23 @@
+{
+  "name": "pxrs-schemas",
+  "version": "0.0.1",
+  "description": "paxers schemas and types",
+  "main": "dist/index.js",
+  "license": "UNLICENSED",
+  "files": [
+    "dist/**/*",
+    "types/**/*",
+    "schemas/**/*",
+    "*.ts"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "tslint -c ../../tslint.json 'types/**/*.ts' -e '**/*.d.ts' -p ./tsconfig.json --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "paxers"
+}

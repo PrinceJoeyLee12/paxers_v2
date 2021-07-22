@@ -1,0 +1,7 @@
+{
+  "extends": "../base-node-tsconfig",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist"
+  }
+}
