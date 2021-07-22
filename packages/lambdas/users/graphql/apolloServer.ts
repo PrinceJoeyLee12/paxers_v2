@@ -1,7 +1,7 @@
 import { ApolloServer, IResolvers } from 'apollo-server-lambda';
 import * as queries from './resolvers/queries';
 import * as mutations from './resolvers/mutations';
-import typeDefs from './type-defs';
+import typeDefs from './typedefs';
 
 const NODE_ENV = process.env.NODE_ENV;
 
@@ -18,7 +18,7 @@ const apolloServer = new ApolloServer({
   // subscriptions: {},
   introspection: IS_DEV,
   playground: {
-    endpoint: process.env.LOCALHOST + '/dev/graphql',
+    endpoint: process.env.LOCALHOST + `/${process.env.STAGE}/graphql`,
   },
   uploads: false,
 });

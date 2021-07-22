@@ -7,7 +7,6 @@ export interface IUserRegistrationObject {
   activated: boolean;
   createdAt: string;
 }
-
 export interface IUserLoginObject {
   email: string;
   password: string;
