@@ -1,6 +1,6 @@
 {
   "name": "pxrs-service-common",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Common Services ",
   "main": "index.ts",
   "scripts": {
@@ -8,5 +8,11 @@
     "lint": "tslint -c ../../tslint.json 'types/**/*.ts' -e '**/*.d.ts' -p ./tsconfig.json --fix"
   },
   "author": "Prince Joey Lee",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ejs": "^3.1.6"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.0.7"
+  }
 }
