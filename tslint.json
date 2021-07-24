@@ -1,0 +1,45 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:latest", "tslint-react", "tslint-config-airbnb", "tslint-config-prettier"],
+  "jsRules": {},
+  "rules": {
+    "prettier": [true, ".prettierrc.js"],
+    "interface-name": false,
+    "no-console": [true, "log", "warn"],
+    "quotemark": [true, "single", "jsx-double"],
+    "jsx-boolean-value": false,
+    "ordered-imports": false,
+    "import-name": false,
+    "object-literal-sort-keys": false,
+    "object-shorthand-properties-first": false,
+    "member-access": false,
+    "member-ordering": false,
+    "variable-name": [true, "allow-pascal-case"],
+    "no-implicit-dependencies": [
+      true,
+      [
+        "theme",
+        "modules",
+        "utils",
+        "components",
+        "containers",
+        "resources",
+        "hooks",
+        "test-utils",
+        "@testing-library/react",
+        "@testing-library/user-event",
+        "@storybook/react",
+        "@storybook/addon-knobs",
+        "@storybook/addon-actions",
+        "@storybook/addon-info",
+        "redux-devtools-extension",
+        "express",
+        "express-request-proxy",
+        "middlewares"
+      ]
+    ],
+    "no-submodule-imports": false,
+    "prefer-array-literal": [true, { "allow-type-parameters": true }]
+  },
+  "rulesDirectory": ["tslint-plugin-prettier"]
+}

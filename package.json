@@ -3,13 +3,43 @@
   "private": true,
   "scripts": {
     "publish": "lerna publish --conventional-commits",
-    "build:all": ""
+    "build:all": "",
+    "lint:base": "tslint -c tslint.json -e '**/*.d.ts' -e '**/*.json' --fix "
   },
   "devDependencies": {
     "lerna": "^4.0.0",
-    "typescript": "^4.3.5"
+    "typescript": "^4.3.5",
+    "lint-staged": "^9.4.2",
+    "tslint": "^6.1.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.0.1",
+    "tslint-react": "^4.0.0",
+    "tslint-react-a11y": "^1.1.0"
   },
   "dependencies": {
     "apollo-server-lambda": "^3.0.2"
+  },
+  "lint-staged": {
+    "packages/client/src/**/*.{ts,tsx}": [
+      "npm run lint:base -- -p packages/client/tsconfig.json",
+      "git add"
+    ],
+    "packages/lambdas/**/*.{ts,tsx}": [
+      "npm run lint:base -- packages/lambdas/tsconfig-test.json",
+      "git add"
+    ],
+    "packages/pxrs-graphql-queries/**/*.{ts,tsx}": [
+      "npm run lint:base -- -p packages/pxrs-graphql-queries/tsconfig.json",
+      "git add"
+    ],
+    "packages/pxrs-schemas/**/*.{ts,tsx}": [
+      "npm run lint:base -- -p packages/pxrs-schemas/tsconfig.json",
+      "git add"
+    ],
+    "packages/pxrs-service-common/**/*.{ts,tsx}": [
+      "npm run lint:base -- -p packages/pxrs-service-common/tsconfig.json",
+      "git add"
+    ]
   }
 }
