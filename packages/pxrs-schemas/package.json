@@ -2,7 +2,7 @@
   "name": "pxrs-schemas",
   "version": "0.0.3",
   "description": "paxers schemas and types",
-  "main": "dist/index.js",
+  "main": "index.ts",
   "license": "MIT",
   "files": [
     "dist/**/*",

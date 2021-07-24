@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.10](https://github.com/PrinceJoeyLee12/paxers_v2/compare/pxrs-service-common@0.0.3...pxrs-service-common@0.0.10) (2021-07-24)
+
+**Note:** Version bump only for package pxrs-service-common
+
+
+
+
+
 ## [0.0.9](https://github.com/PrinceJoeyLee12/paxers_v2/compare/pxrs-service-common@0.0.3...pxrs-service-common@0.0.9) (2021-07-24)
 
 **Note:** Version bump only for package pxrs-service-common
