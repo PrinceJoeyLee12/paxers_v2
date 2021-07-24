@@ -1,8 +1,8 @@
 {
   "name": "pxrs-service-common",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Common Services ",
-  "main": "./index.ts",
+  "main": "dist/index.js",
   "files": [
     "build/**/*",
     "dist/**/*",
