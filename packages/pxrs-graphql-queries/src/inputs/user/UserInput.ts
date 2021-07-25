@@ -8,7 +8,7 @@ export const UserRegisterInput = `
 `;
 
 export const UserLoginInput = `
-  input UserRegisterInput {
+  input UserLoginInput {
     email: String!
     password: String!
   }
