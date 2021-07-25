@@ -1,6 +1,6 @@
 {
   "name": "paxers",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Paxers Application uses serverless lambda in backend",
   "main": "handler.js",
   "private": true,
@@ -19,9 +19,9 @@
     "ejs": "^2.7.4",
     "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1",
-    "pxrs-graphql-queries": "^0.0.7",
-    "pxrs-schemas": "^0.0.5",
-    "pxrs-service-common": "^0.0.12",
+    "pxrs-graphql-queries": "^0.0.8",
+    "pxrs-schemas": "^0.0.6",
+    "pxrs-service-common": "^0.0.13",
     "source-map-support": "^0.5.10",
     "uuid": "^3.3.2"
   },

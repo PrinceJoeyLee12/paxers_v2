@@ -1,6 +1,6 @@
 {
   "name": "pxrs-graphql-queries",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Frontend Apollo GraphQl Queries",
   "main": "dist/index.js",
   "author": "Prince Joey Lee",
