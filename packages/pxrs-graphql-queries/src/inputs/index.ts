@@ -1,1 +1,1 @@
-export { UserLoginInput, UserRegisterInput } from './user/UserInput';
+export { default as UserInput } from './user/UserInput';

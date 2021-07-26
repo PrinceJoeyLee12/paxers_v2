@@ -7,10 +7,6 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package pxrs-graphql-queries
 
-
-
-
-
 ## [0.0.7](https://github.com/PrinceJoeyLee12/paxers_v2/compare/pxrs-graphql-queries@0.0.5...pxrs-graphql-queries@0.0.7) (2021-07-25)
 
 **Note:** Version bump only for package pxrs-graphql-queries

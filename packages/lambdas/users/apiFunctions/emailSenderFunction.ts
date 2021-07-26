@@ -1,9 +1,6 @@
 import { Handler } from 'aws-lambda';
 import AWS from 'aws-sdk';
-import {
-  SEND_ACCOUNT_ACTIVATION_EMAIL,
-  renderFileType,
-} from 'pxrs-service-common';
+import { renderFileType } from 'pxrs-service-common';
 
 const emailSenderFunction: Handler = (event) => {
   const ses = new AWS.SES({ apiVersion: '2010-12-01' });
@@ -33,7 +30,13 @@ const emailSenderFunction: Handler = (event) => {
           Html: {
             // HTML Format of the email
             Charset: 'UTF-8',
-            Data: `${renderFileType(typeOfEmail, parsedBody.firstName)}`,
+            Data: `${renderFileType(
+              { firstName: parsedBody.firstName },
+              typeOfEmail.stringValue
+            ).then((data) => {
+              console.log('HTML Data: ', data);
+              return data;
+            })}`,
           },
           Text: {
             Charset: 'UTF-8',

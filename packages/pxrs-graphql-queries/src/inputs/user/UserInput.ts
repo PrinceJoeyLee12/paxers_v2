@@ -1,14 +1,11 @@
-export const UserRegisterInput = `
+export default `
+  input UserLoginInput {
+    email: String!
+    password: String!
+  },
   input UserRegisterInput {
     firstName: String!
     lastName: String!
-    email: String!
-    password: String!
-  }
-`;
-
-export const UserLoginInput = `
-  input UserLoginInput {
     email: String!
     password: String!
   }

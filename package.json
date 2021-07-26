@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "publish": "lerna publish --conventional-commits",
-    "build:all": "",
+    "build:all": "./scripts/build-all.sh",
     "lint:base": "tslint -c tslint.json -e '**/*.d.ts' -e '**/*.json' --fix "
   },
   "devDependencies": {

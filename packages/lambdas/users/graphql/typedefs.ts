@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server-lambda';
 import {
   UserLoginInput,
+  UserInput,
   UserRegisterInput,
   UserMutations,
   UserObject,
@@ -9,8 +10,7 @@ import {
 } from 'pxrs-graphql-queries';
 
 const typeDefStrings = [
-  UserLoginInput,
-  UserRegisterInput,
+  UserInput,
   UserMutations,
   UserObject,
   UserQueries,

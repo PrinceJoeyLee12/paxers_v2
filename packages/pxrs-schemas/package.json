@@ -2,7 +2,7 @@
   "name": "pxrs-schemas",
   "version": "0.0.6",
   "description": "paxers schemas and types",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "license": "MIT",
   "files": [
     "dist/**/*",
@@ -12,7 +12,8 @@
   ],
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "npm-run-all build:*",
+    "build:tsc": "tsc -p .",
     "lint": "tslint -c ../../tslint.json 'types/**/*.ts' -e '**/*.d.ts' -p ./tsconfig.json --fix"
   },
   "repository": {
