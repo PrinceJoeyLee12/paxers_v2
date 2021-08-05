@@ -21,6 +21,7 @@
     ".serverless/**/*",
     ".webpack/**/*",
     "client/**/*",
+    "test/**/*",
     ".vscode/**/*"
   ]
 }

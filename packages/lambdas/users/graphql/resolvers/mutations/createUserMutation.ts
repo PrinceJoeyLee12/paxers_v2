@@ -10,7 +10,7 @@ import {
   IEmailSenderArgs,
 } from 'pxrs-schemas';
 import { sendMessage } from '../../../../utils/sqs/sqsFunctions';
-import { SEND_ACCOUNT_ACTIVATION_EMAIL } from 'pxrs-service-common';
+import { EmailTypes } from 'pxrs-schemas';
 
 interface Response {
   message: string;
@@ -55,7 +55,7 @@ async function createUserMutation(
   const sqsArgs: IEmailSenderArgs = {
     recipientEmail: email,
     validatedEmail: process.env.VALIDATED_EMAIL,
-    typeOfEmail: SEND_ACCOUNT_ACTIVATION_EMAIL,
+    typeOfEmail: EmailTypes.ACCOUNT_ACTIVATION_EMAIL,
   };
 
   return new Promise((resolve, reject) => {
@@ -83,7 +83,7 @@ async function createUserMutation(
               sqsArgs.emailInformation = {
                 firstName,
                 lastName,
-                recipientEmail: email,
+                recipientEmail: [email],
                 redirectURL: `${process.env.HOSTNAME}/account-activation/${ResponseToken}`,
               };
               const inQueue = await sendMessage(sqsArgs);

@@ -32,6 +32,12 @@ provider:
         - ses:SendEmail
         - ses:SendRawEmail
       Resource: "*"
+    - Effect: Allow
+      Principal: "*"
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: "arn:aws:s3:::paxers-email-templates/*"
   apiKeys:
     - name: lambdaApolloKey
       value: ${env:APOLLO_LAMBDA_KEY}
