@@ -8,11 +8,11 @@
     "deploy": "serverless deploy",
     "UploadSesTemplates": "npm run ",
     "dev": "serverless offline --apiKey d41d8cd98f00b204e9800998ecf8427e",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
     "dev-deploy-user": "./serverless.sh deploy -v -c serverless_user.yml",
     "deploy:function": "./serverless.sh deploy function -f send-email -c serverless_user.yml",
     "dev-deploy-user-force": "./serverless.sh deploy -v --force -c serverless_user.yml",
-    "serverless:offline-user": "./serverless.sh offline -c serverless_user.yml"
+    "serverless:offline-user": "./serverless.sh offline -c serverless_user.yml",
+    "lint": "tslint -p tsconfig.json -c ../../tslint.json"
   },
   "dependencies": {
     "apollo-server-lambda": "^2.16.1",
@@ -29,10 +29,10 @@
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.17",
+    "@types/jsonwebtoken": "^8.5.4",
     "@types/node": "^10.14.22",
     "aws-lambda": "^1.0.6",
     "aws-sdk": "^2.941.0",
-    "eslint": "^6.6.0",
     "npm-run-all": "^4.1.5",
     "serverless": "^2.50.0",
     "serverless-dotenv-plugin": "^3.0.0",
@@ -40,9 +40,6 @@
     "serverless-offline": "^7.0.0",
     "serverless-plugin-typescript": "^1.1.5",
     "serverless-pseudo-parameters": "^2.5.0",
-    "ts-loader": "^5.3.3",
-    "tslint": "^5.20.0",
-    "tslint-config-airbnb": "^5.11.2",
     "typescript": "^3.2.4"
   },
   "author": "Prince Joey Lee",

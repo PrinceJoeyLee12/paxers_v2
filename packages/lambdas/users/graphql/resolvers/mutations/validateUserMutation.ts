@@ -1,14 +1,21 @@
-import { IUserLoginMutationArgs, IUserLoginObject } from 'pxrs-schemas';
-
+import {
+  IUserLoginMutationArgs,
+  IUserLoginObject,
+  IJwtPayload,
+  ERequest,
+} from 'pxrs-schemas';
 import { DynamoDB } from 'aws-sdk';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { ApolloError } from 'apollo-server-lambda';
+import { GetItemInput } from 'aws-sdk/clients/dynamodb';
+import { jwt as JWT } from 'pxrs-service-common';
 
 interface Response {
   message: string;
   token?: string;
-  user?: IUserLoginObject;
+  // TODO change any for user
+  user?: any | null;
 }
 
 async function validateUserMutation(
@@ -19,7 +26,7 @@ async function validateUserMutation(
     input: { email, password },
   } = args;
 
-  let response = {
+  let response: Response = {
     message: '',
     token: '',
     user: null,
@@ -27,11 +34,10 @@ async function validateUserMutation(
 
   const dynamodb = new DynamoDB.DocumentClient();
 
-  const params = {
+  const params: GetItemInput = {
     TableName: `${process.env.SERVICE}-${process.env.DYNAMODB_USERTABLE}-${process.env.STAGE}`,
-    Key: {
-      email,
-    },
+    Key: { email: { S: email } },
+    ProjectionExpression: 'email',
   };
 
   return new Promise((resolve, reject) => {
@@ -39,37 +45,24 @@ async function validateUserMutation(
       if (!err && Object.keys(data).length !== 0) {
         const isMatch = await bcrypt.compare(password, data.Item.password);
         if (isMatch) {
-          const payload = {
+          const payload: IJwtPayload = {
             user: {
-              email: data.email,
+              email: data.Item.email,
             },
           };
-          jwt.sign(
+
+          // 2. generate a token for the new user
+          const token: string = await JWT.sign(
             payload,
             process.env.SECRET_KEY,
             {
               expiresIn: process.env.TOKEN_FOR_AUTH_EXPIRATION,
             },
-            (err, responseToken) => {
-              if (!err) {
-                response.token = responseToken;
-                response.message = 'User Successfully authenticated';
-                response.user = data.Item;
-                response.user.password = 'hidden'; /*hide password to client*/
-                console.log('Token: ', response);
-                resolve(response);
-              } else {
-                console.log('Validation Failed with some other reason', err);
-                response.message = "There's an error logging user";
-                reject(
-                  new ApolloError(
-                    'Unable to generate token at this moment',
-                    'INTERNAL_SERVER_ERROR'
-                  )
-                );
-              }
-            }
+            ERequest.APOLLO
           );
+          response.token = token;
+          response.user = data.Item;
+          resolve(response);
         } else
           reject(
             new ApolloError('Email or Password is incorrect!', 'BAD_USER_INPUT')

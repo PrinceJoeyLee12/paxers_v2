@@ -1,17 +1,53 @@
-import AWS from 'aws-sdk';
-import { EmailTypes } from 'pxrs-schemas';
+import AWS, { AWSError, Request } from 'aws-sdk';
+import { GetTemplateResponse } from 'aws-sdk/clients/ses';
+import {
+  ERegion,
+  EApiVersion,
+  EmailTypes,
+  EmailTemplateNames,
+  IAWSConfig,
+} from 'pxrs-schemas';
 
-// TODO change Promise<any> Response into more detailed type
-export default async (templateName: EmailTypes): Promise<any> => {
-  new AWS.SES({ apiVersion: '2010-12-01' })
-    .getTemplate({ TemplateName: templateName })
-    .promise()
-    .then(function (data) {
-      console.log(data.Template.SubjectPart);
-      return data;
+export default async (
+  EmailType: EmailTypes,
+  AWSConfig: IAWSConfig
+  // ): Promise<Request<GetTemplateResponse, AWSError>> => {
+): Promise<any> => {
+  AWS.config.update(AWSConfig);
+
+  // console.log('TemplateName: ', EmailTemplateNames[EmailTypes[EmailType]]);
+
+  // try {
+  //   const templatePromise: Request<GetTemplateResponse, AWSError> =
+  //     await new AWS.SES({
+  //       apiVersion: EApiVersion.V2010_12_01,
+  //     }).getTemplate({
+  //       TemplateName: EmailTemplateNames[EmailTypes[EmailType]],
+  //     });
+
+  //   console.log('templatePromise', templatePromise);
+  //   return templatePromise;
+  // } catch (error: any) {
+  //   console.log('Error', error);
+  //   throw new Error(`ERROR Message: ${error.message} `);
+  // }
+
+  const templatePromise = new AWS.SES({ apiVersion: EApiVersion.V2010_12_01 })
+    .getTemplate({
+      TemplateName: EmailTemplateNames[EmailTypes[EmailType]],
     })
-    .catch(function (err) {
-      console.error('ERROR: ', err, err.stack);
-      return null;
-    });
+    .promise();
+
+  // Handle promise's fulfilled/rejected states
+  return new Promise(() => {
+    templatePromise
+      .then(function (data) {
+        console.log('Success: ', data);
+        return data;
+      })
+      .catch(function (err) {
+        console.error(err, err.stack);
+        return null;
+      });
+  });
 };

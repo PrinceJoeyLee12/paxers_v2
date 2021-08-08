@@ -3,9 +3,9 @@
   "extends": ["tslint:latest", "tslint-react", "tslint-config-airbnb", "tslint-config-prettier"],
   "jsRules": {},
   "rules": {
+    "no-console": false,
     "prettier": [true, ".prettierrc.js"],
     "interface-name": false,
-    "no-console": [true, "log", "warn"],
     "quotemark": [true, "single", "jsx-double"],
     "jsx-boolean-value": false,
     "ordered-imports": false,
@@ -18,10 +18,10 @@
     "no-implicit-dependencies": [
       true,
       [
-        "theme",
-        "modules",
-        "utils",
-        "components",
+        "pxrs-service-common",
+        "pxrs-schemas",
+        "lambdas",
+        "pxrs-graphql-queries",
         "containers",
         "resources",
         "hooks",
@@ -38,7 +38,15 @@
         "middlewares"
       ]
     ],
+    "no-shadowed-variable": false,
     "no-submodule-imports": false,
+    "no-unused-expression": false,
+    "no-empty": false,
+    "trailing-comma": false,
+    "prefer-const": false,
+    "curly": false,
+    "max-line-length": [false],
+    "typescript.validate.enable": false,
     "prefer-array-literal": [true, { "allow-type-parameters": true }]
   },
   "rulesDirectory": ["tslint-plugin-prettier"]

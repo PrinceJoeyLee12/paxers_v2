@@ -1,27 +1,25 @@
-export enum EmailTypes {
-  FORGOT_PASSWORD_EMAIL = 'FORGOT_PASSWORD_EMAIL',
-  REGISTRATION_CONFIRMATION_EMAIL = 'REGISTRATION_CONFIRMATION_EMAIL',
-  ACCOUNT_ACTIVATION_EMAIL = 'ACCOUNT_ACTIVATION_EMAIL',
+import {
+  IMessageToQueueRegisterUserArgs,
+  IRegisterUserEmailInformation,
+} from './user';
+
+export * from './user';
+export interface ISendMessageToQueueEmailParams {
+  MessageAttributes: {
+    validatedEmail: {
+      DataType: string;
+      StringValue: string;
+    };
+    typeOfEmail: {
+      DataType: string;
+      StringValue: string;
+    };
+  };
+  MessageBody: string;
+  QueueUrl: string;
 }
 
-// TODO change any tyoe of data to more strict type
-export interface ISendEmail {
-  accessKeyId: string;
-  secretAccessKey: string;
-  region: ERegion;
-  ToAddresses: string[];
-  ConfigurationSetName: string;
-  Source: string;
-  EmailType: EmailTypes;
-  data?: IForgotPasswordTypes | any;
-}
+export type ISendEmailMessageToQueueArgs = IMessageToQueueRegisterUserArgs;
 
-interface IForgotPasswordTypes {
-  firstName: string;
-  lastName: string;
-  link: string;
-}
-
-export enum ERegion {
-  ap_southeast_1 = 'ap-southeast-1',
-}
+declare type IEmailMessageBody = IRegisterUserEmailInformation;
+export declare type IMessageBody = IEmailMessageBody;

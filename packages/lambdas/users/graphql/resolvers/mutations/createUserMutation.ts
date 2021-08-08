@@ -1,16 +1,21 @@
 import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { ApolloError } from 'apollo-server-lambda';
+import { sqsBaseUrl } from '../../../../constants/default';
 
 import {
   IUserRegistrationMutationArgs,
   IUserRegistrationObject,
-  IEmailSenderArgs,
+  IMessageToQueueRegisterUserArgs,
+  EmailTypes,
+  IJwtPayload,
+  IRegisterUserDynamodbParams,
+  EDynamodbConditionExpression,
+  ERequest,
 } from 'pxrs-schemas';
-import { sendMessage } from '../../../../utils/sqs/sqsFunctions';
-import { EmailTypes } from 'pxrs-schemas';
+
+import { sendMessageToQueue, jwt as JWT } from 'pxrs-service-common';
 
 interface Response {
   message: string;
@@ -26,7 +31,7 @@ async function createUserMutation(
     input: { firstName, lastName, email, password },
   } = args;
 
-  let response = {
+  let response: Response = {
     message: '',
     token: '',
     user: null,
@@ -34,7 +39,7 @@ async function createUserMutation(
 
   const dynamodb = new DynamoDB.DocumentClient();
 
-  const params = {
+  const params: IRegisterUserDynamodbParams = {
     TableName: `${process.env.SERVICE}-${process.env.DYNAMODB_USERTABLE}-${process.env.STAGE}`,
     Item: {
       id: uuidv4(),
@@ -46,67 +51,62 @@ async function createUserMutation(
       createdAt: new Date(Date.now()).toISOString(),
     },
     ConditionExpression:
-      'attribute_not_exists(email)' /* Check if email is already been used */,
+      EDynamodbConditionExpression.NOT_EXIST_EMAIL /* Check if email is already been used */,
   };
   response.user = {
     ...params.Item,
   };
-
-  const sqsArgs: IEmailSenderArgs = {
-    recipientEmail: email,
+  const sqsArgs: IMessageToQueueRegisterUserArgs = {
+    recipientEmails: [email],
     validatedEmail: process.env.VALIDATED_EMAIL,
     typeOfEmail: EmailTypes.ACCOUNT_ACTIVATION_EMAIL,
+    emailInformation: {
+      firstName,
+      lastName,
+      recipientEmail: [email],
+      redirectURL: '',
+    },
+    QueueUrl: `${sqsBaseUrl}/${process.env.SERVICE}-${process.env.SQS_EMAIL_SENDER}-${process.env.STAGE}`,
   };
 
   return new Promise((resolve, reject) => {
-    dynamodb.put(params, (err) => {
+    // TODO Soon use salesforce organize customers and OTKA for signing in
+    // 1. Put User to dynamoDB
+    dynamodb.put(params, async (err) => {
       if (!err) {
         console.log('Successfully inserted');
-        const payload = {
+
+        const payload: IJwtPayload = {
           user: {
             id: params.Item.id,
           },
         };
         response.user.password = 'hidden';
 
-        //generate a token for the new user
-        jwt.sign(
+        // 2. generate a token for the new user
+        const token: string = await JWT.sign(
           payload,
           process.env.SECRET_KEY,
           {
             expiresIn: process.env.TOKEN_FOR_AUTH_EXPIRATION,
           },
-          async (err, ResponseToken) => {
-            if (!err) {
-              //Send QUEUE for Email if token is Available
-
-              sqsArgs.emailInformation = {
-                firstName,
-                lastName,
-                recipientEmail: [email],
-                redirectURL: `${process.env.HOSTNAME}/account-activation/${ResponseToken}`,
-              };
-              const inQueue = await sendMessage(sqsArgs);
-              response.token = ResponseToken;
-              if (inQueue) {
-                response.message = `User Successfully inserted and Email Activation was sent to ${email}`;
-              } else {
-                response.message = `User Successfully inserted but activation mail wasn't sent this is a SERVER-SIDE_ERROR`;
-              }
-              resolve(response);
-            } else {
-              console.log('Insert Failed with some other reason', err);
-              reject(
-                new ApolloError(
-                  'Unable to generate token at this moment',
-                  'INTERNAL_SERVER_ERROR'
-                )
-              );
-            }
-          }
+          ERequest.APOLLO
         );
+
+        // 3. Send Message to SQS for account email activation processing
+        sqsArgs.emailInformation.redirectURL = `${process.env.HOSTNAME}/account-activation/${token}`;
+        const inQueue = await sendMessageToQueue(sqsArgs);
+        response.token = token;
+        if (inQueue) {
+          response.message = `User Successfully inserted and Email Activation was sent to ${email}`;
+        } else {
+          response.message =
+            "User Successfully inserted but activation mail wasn't sent this is a SERVER-SIDE_ERROR";
+        }
+        resolve(response);
       } else {
         console.log('ERROR IS: ', err);
+        // TODO error handling
         if (err.code === 'ConditionalCheckFailedException') {
           reject(
             new ApolloError(

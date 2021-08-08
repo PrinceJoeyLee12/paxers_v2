@@ -3,5 +3,6 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "dist"
-  }
+  },
+  "include": ["types/**/*", "schemas/**/*", "*.ts"]
 }

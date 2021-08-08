@@ -1,30 +1,40 @@
-import { Handler } from 'aws-lambda';
-import { getEmailTemplate } from 'pxrs-service-common';
-import { EmailTypes } from 'pxrs-schemas';
+import { SQSHandler, SQSEvent } from 'aws-lambda';
 import { sendEmail } from 'pxrs-service-common';
+import {
+  ISqsEventRecord,
+  ISqsSendEmailEventBody,
+  ISesSendEmailArgs,
+  ERegion,
+} from 'pxrs-schemas';
 
-const emailSenderFunction: Handler = async (event) => {
-  event.Records.forEach(async (record) => {
+const emailSenderFunction: SQSHandler = async (event: SQSEvent) => {
+  const records: any[] = event.Records;
+
+  records.forEach(async (record: ISqsEventRecord) => {
     const {
       body,
       messageAttributes: { validatedEmail, typeOfEmail },
     } = record;
-    const parsedBody = JSON.parse(body);
+    const parsedBody: ISqsSendEmailEventBody = JSON.parse(body.toString());
 
-    const args = {
+    const args: ISesSendEmailArgs = {
       accessKeyId: process.env.ACCESSKEYID,
       secretAccessKey: process.env.SECRETACCESSKEY,
-      region: process.env.REGION,
-      ToAddresses: [...parsedBody.email],
+      region: ERegion.ap_southeast_1,
+      ToAddresses: [...parsedBody.recipientEmail],
       ConfigurationSetName: process.env.CONFIGURATIONSETNAME,
-      Source: validatedEmail,
-      EmailType: typeOfEmail,
+      Source: validatedEmail.stringValue,
+      EmailType: typeOfEmail.stringValue,
       data: parsedBody,
     };
 
-    await sendEmail(args);
+    const res = await sendEmail(args);
+    console.log('Status', res.status);
+    console.log('Message', res.message);
   });
 
+  // tslint:disable-next-line: max-line-length
+  // TODO return nothing for now but for but maybe imbed AWSXray soon or create Fullback when function fails
   return;
 };
 export default emailSenderFunction;

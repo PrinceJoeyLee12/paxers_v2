@@ -1,0 +1,5 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["handler.ts", "users", "events", "constants", "test", "**/*.test.ts", "utils"],
+  "exclude": ["node_modules/**", "./serverless/**"]
+}

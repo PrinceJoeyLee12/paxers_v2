@@ -41,6 +41,7 @@ lighthouse-report.html
 
 # lerna
 lerna-debug.log
+*.log
 
 *.tgz
 verdaccio-storage/

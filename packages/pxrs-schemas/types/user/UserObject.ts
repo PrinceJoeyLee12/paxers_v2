@@ -9,5 +9,5 @@ export interface IUserRegistrationObject {
 }
 export interface IUserLoginObject {
   email: string;
-  password: string;
+  password?: string;
 }

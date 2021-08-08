@@ -1,16 +1,12 @@
-import AWS from 'aws-sdk';
-import { ISendEmail } from 'pxrs-schemas';
+import AWS, { Request, AWSError } from 'aws-sdk';
+import { SendEmailRequest, GetTemplateResponse } from 'aws-sdk/clients/ses';
+import { ISendEmail, EApiVersion } from 'pxrs-schemas';
 import getEmailTemplate from './getTemplate';
+import { SendEmailParams } from './helpers';
 
 export default async (
   args: ISendEmail
 ): Promise<{ status: number; message: string }> => {
-  const ses = new AWS.SES({ apiVersion: '2010-12-01' });
-  const response = {
-    message: 'message was not sent',
-    status: 400,
-  };
-
   const {
     accessKeyId,
     secretAccessKey,
@@ -21,51 +17,48 @@ export default async (
     ConfigurationSetName,
     data,
   } = args;
-  AWS.config.update({
+
+  const ses = new AWS.SES({ apiVersion: EApiVersion.V2010_12_01 });
+  const response = {
+    message: 'message was not sent',
+    status: 400,
+  };
+
+  const AWSConfig = {
     accessKeyId,
     secretAccessKey,
     region,
-  });
-
-  const params = {
-    Destination: {
-      ToAddresses: [...ToAddresses], // Email address/addresses that you want to send your email
-    },
-    ConfigurationSetName,
-    Message: {
-      Body: {
-        Html: {
-          // HTML Format of the email
-          Charset: 'UTF-8',
-          Data: `${async (): Promise<string> =>
-            await getEmailTemplate(EmailType)}`,
-        },
-        Text: {
-          Charset: 'UTF-8',
-          Data: `Hello ${data.firstName}`,
-        },
-      },
-      Subject: {
-        Charset: 'UTF-8',
-        Data: 'Test email',
-      },
-    },
-    Source,
   };
 
-  const sendEmail = ses.sendEmail(params).promise();
+  AWS.config.update(AWSConfig);
 
-  sendEmail
-    .then(async (data) => {
-      console.log('email submitted to SES', data);
-      response.message = 'email was successfully sent';
-      response.status = 200;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  // 1. Get Template
+  try {
+    const emailHTML: any = await getEmailTemplate(EmailType, AWSConfig);
+    console.log('emailHTML', emailHTML);
 
-  return {
-    ...response,
-  };
+    const params: SendEmailRequest = SendEmailParams(
+      ConfigurationSetName,
+      Source,
+      ToAddresses,
+      emailHTML
+    );
+
+    // 2. Send Email
+    try {
+      const sendEmail = await ses.sendEmail(params);
+      console.log('SendEmail', sendEmail);
+      if (sendEmail) {
+        response.message = 'email was successfully sent';
+        response.status = 200;
+      }
+    } catch (err: any) {
+      console.log('ERROR: ', err);
+      throw new Error(`Message Error: ${err.message}`);
+    }
+    console.log('Response', response);
+    return response;
+  } catch (err: any) {
+    throw new Error(`Message Error: ${err.message}`);
+  }
 };
