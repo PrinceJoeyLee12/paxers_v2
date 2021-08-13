@@ -8,10 +8,10 @@
     "deploy": "serverless deploy",
     "UploadSesTemplates": "npm run ",
     "dev": "serverless offline --apiKey d41d8cd98f00b204e9800998ecf8427e",
-    "dev-deploy-user": "./serverless.sh deploy -v -c serverless_user.yml",
+    "dev-deploy-user": "./serverless.Unix.sh deploy -v -c serverless_user.yml",
     "deploy:function": "./serverless.sh deploy function -f send-email -c serverless_user.yml",
     "dev-deploy-user-force": "./serverless.sh deploy -v --force -c serverless_user.yml",
-    "serverless:offline-user": "./serverless.sh offline -c serverless_user.yml",
+    "serverless:offline": "serverless offline --apiKey my-secret-key861234162348192347",
     "lint": "tslint -p tsconfig.json -c ../../tslint.json"
   },
   "dependencies": {

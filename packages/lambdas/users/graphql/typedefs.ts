@@ -1,8 +1,6 @@
 import { gql } from 'apollo-server-lambda';
 import {
-  UserLoginInput,
   UserInput,
-  UserRegisterInput,
   UserMutations,
   UserObject,
   UserQueries,

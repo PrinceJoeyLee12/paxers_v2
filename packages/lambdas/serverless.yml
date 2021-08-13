@@ -1,1 +1,140 @@
 
+org: paxers
+app: paxers
+service:
+  name: ${env:SERVICE}
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-plugin-typescript
+  - serverless-pseudo-parameters
+  - serverless-mocha
+  
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: ${env:STAGE}
+  region: ${env:REGION}
+  apiName: ${self:service}-user-api-${self:provider.stage}
+  timeout: 15
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/*"
+    - Effect: Allow
+      Action:
+        - ses:SendEmail
+        - ses:SendRawEmail
+        - ses:GetTemplate
+      Resource: "*"
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: "*"
+  apiKeys:
+    - name: lambdaApolloKey
+      value: ${env:APOLLO_LAMBDA_KEY}
+  
+functions:
+  user-create:  
+    name: ${self:provider.stage}-user-create-function
+    handler: handler.GraphqlHandler
+    events:
+      - http:
+          private: true
+          path: /graphql/user/create
+          method: post
+  user-validate:  
+    name: ${self:provider.stage}-user-validate-function
+    handler: handler.GraphqlHandler
+    events:
+      - http:
+          private: true
+          path: /graphql/user/validate
+          method: post
+      - http:
+          private: true
+          path: /graphql/user/validate
+          method: get
+  user-reset-password:  
+    name: ${self:provider.stage}-user-reset-password-function
+    handler: handler.GraphqlHandler
+    events:
+      - http:
+          private: true
+          path: /graphql/user/reset-password
+          method: post
+  send-email:
+    name: ${self:provider.stage}-send-email-function
+    handler: handler.EmailSenderHandler
+    events:
+      - sqs: 
+          arn: "arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:${self:custom.sqs.emailSenderQueue}"
+          batchSize: 10
+          maximumBatchingWindow: 5
+          enabled: true
+        cors: true
+custom:
+  dynamodb:
+    userTable: ${self:service}-${env:DYNAMODB_USERTABLE}-${self:provider.stage}
+    eventTable: ${self:service}-${env:DYNAMODB_EVENTTABLE}-${self:provider.stage}
+  sqs:
+    emailSenderQueue: ${self:service}-${env:SQS_EMAIL_SENDER}-${self:provider.stage}
+resources:
+  Resources:
+    userTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: email
+            AttributeType: S
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: email
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: UserArrayWithID
+            KeySchema:
+              - AttributeName: id
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.dynamodb.userTable}
+    emailSenderQueue:
+      Type: "AWS::SQS::Queue"
+      Properties:
+        QueueName: ${self:custom.sqs.emailSenderQueue}
+        ReceiveMessageWaitTimeSeconds: 5
+    sqsPolicy:
+      Type: AWS::SQS::QueuePolicy
+      Properties:
+        PolicyDocument:
+          Id: ${self:service}-QueuePolicy-${self:provider.stage}
+          Version: '2012-10-17'
+          Statement:
+            - Sid: Allow-User-SendAndReceiveMessage-${self:provider.stage}
+              Effect: Allow
+              Principal: "*"
+              Action:
+                - "SQS:*"
+              Resource: "arn:aws:sqs:#{AWS::Region}:#{AWS::AccountId}:*"
+        Queues:
+          - https://sqs.#{AWS::Region}.amazonaws.com/#{AWS::AccountId}/${self:custom.sqs.emailSenderQueue}
+
+        

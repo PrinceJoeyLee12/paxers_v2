@@ -1,0 +1,64 @@
+POST http://localhost:3000/dev/graphql/user/validate HTTP/1.1
+X-Request-Type: GraphQL
+x-api-key: my-secret-key861234162348192347
+
+mutation {
+    validateUserMutation(input: { email: "princejoeylee12@gmail.com", password: "password"}){
+        token,
+        message,
+        user {
+            email,
+            password,
+        }
+    }
+}
+
+###
+
+POST http://localhost:3000/dev/graphql/user/create HTTP/1.1
+X-Request-Type: GraphQL
+x-api-key: my-secret-key861234162348192347
+
+mutation {
+    createUserMutation(input: {firstName: "Prince Joey", lastName: "Lee", email: "princejoeyleerun@gmail.com", password: "password"}){
+        token,
+        message,
+        user {
+            id,
+            lastName,
+            email,
+            password,
+        }
+    }
+}
+
+###
+
+POST http://localhost:3000/dev/graphql/user/reset-password HTTP/1.1
+X-Request-Type: GraphQL
+x-api-key: my-secret-key861234162348192347
+
+mutation {
+    forgotPassword(input: { email: "princejoeylee12@gmail.com" }){
+        message,
+    }
+}
+
+###
+
+POST https://3g8o2jkgdf.execute-api.ap-southeast-1.amazonaws.com/dev/graphql/user/create HTTP/2.0
+X-Request-Type: GraphQL
+x-api-key: secret-key-akhdfkadsfhaksjfhasdkjfhskjdfhsdfhasdfk
+
+mutation {
+    createUserMutation(input: {firstName: "Prince Joey", lastName: "Lee", email: "princejoeylee12@gmail.com", password: "password"}){
+        token,
+        message,
+        user {
+            id,
+            lastName,
+            email,
+            password,
+        }
+    }
+}

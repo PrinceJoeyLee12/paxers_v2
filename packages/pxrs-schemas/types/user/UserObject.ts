@@ -1,4 +1,4 @@
-export interface IUserRegistrationObject {
+export interface IBaseUseObject {
   id: string;
   firstName: string;
   lastName: string;
@@ -9,5 +9,5 @@ export interface IUserRegistrationObject {
 }
 export interface IUserLoginObject {
   email: string;
-  password?: string;
+  password: string;
 }

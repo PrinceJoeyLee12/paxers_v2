@@ -3,7 +3,7 @@ import { sendEmail } from 'pxrs-service-common';
 import {
   ISqsEventRecord,
   ISqsSendEmailEventBody,
-  ISesSendEmailArgs,
+  ISendEmailArgs,
   ERegion,
 } from 'pxrs-schemas';
 
@@ -17,7 +17,7 @@ const emailSenderFunction: SQSHandler = async (event: SQSEvent) => {
     } = record;
     const parsedBody: ISqsSendEmailEventBody = JSON.parse(body.toString());
 
-    const args: ISesSendEmailArgs = {
+    const args: ISendEmailArgs = {
       accessKeyId: process.env.ACCESSKEYID,
       secretAccessKey: process.env.SECRETACCESSKEY,
       region: ERegion.ap_southeast_1,

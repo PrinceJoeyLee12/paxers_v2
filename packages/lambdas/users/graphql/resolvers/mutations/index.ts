@@ -1,2 +1,3 @@
-export { default as createUserMutation } from './createUserMutation';
-export { default as validateUserMutation } from './validateUserMutation';
+export { default as createUser } from './createUser';
+export { default as validateUser } from './validateUser';
+export { default as forgotPassword } from './forgotPassword';

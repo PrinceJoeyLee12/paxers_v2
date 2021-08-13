@@ -1,15 +1,14 @@
-import { IUserRegistrationObject, IUserLoginObject } from '../user';
-import { EDynamodbConditionExpression } from '../constants';
+import { IBaseUseObject, IUserLoginObject } from '../user';
+import { EDynamodbConditionExpression, EDynamoPrimaryKeys } from '../constants';
 
 export interface IRegisterUserDynamodbParams {
   TableName: string;
-  Item: IUserRegistrationObject;
+  Item: IBaseUseObject;
   ConditionExpression: EDynamodbConditionExpression;
 }
 
-export interface ILoginUserDynamodbParams {
+export interface IGetItemBaseDynamoParams {
   TableName: string;
-  Key: {
-    email: string;
-  };
+  Key: any;
+  ProjectionExpression?: string;
 }

@@ -1,16 +1,18 @@
 import { EmailTypes } from '../constants';
 
-export interface IRegisterUserEmailInformation {
-  firstName: string;
-  lastName: string;
+interface IBaseEmailInformation {
   recipientEmail: string[];
   redirectURL: string;
+}
+export interface IUserEmailInformation extends IBaseEmailInformation {
+  firstName: string;
+  lastName: string;
 }
 
 export interface IMessageToQueueRegisterUserArgs {
   recipientEmails: string[];
   validatedEmail: string;
   typeOfEmail: EmailTypes;
-  emailInformation: IRegisterUserEmailInformation;
+  emailInformation: IUserEmailInformation;
   QueueUrl: string;
 }

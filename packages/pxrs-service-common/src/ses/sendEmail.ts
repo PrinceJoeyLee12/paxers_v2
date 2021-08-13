@@ -1,11 +1,11 @@
 import AWS, { Request, AWSError } from 'aws-sdk';
 import { SendEmailRequest, GetTemplateResponse } from 'aws-sdk/clients/ses';
-import { ISendEmail, EApiVersion } from 'pxrs-schemas';
+import { ISendEmailArgs, EApiVersion } from 'pxrs-schemas';
 import getEmailTemplate from './getTemplate';
 import { SendEmailParams } from './helpers';
 
 export default async (
-  args: ISendEmail
+  args: ISendEmailArgs
 ): Promise<{ status: number; message: string }> => {
   const {
     accessKeyId,

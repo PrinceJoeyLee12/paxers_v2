@@ -1,22 +1,17 @@
-import { IRegisterUserEmailInformation } from '../emails';
+import { IUserEmailInformation } from '../emails';
 import { IAWSConfig } from './aws';
 import { Charset, EmailTypes } from '../constants';
 
 export interface ISesBaseEventArgs extends IAWSConfig {
+  ToAddresses: string[];
+  Source: string;
   ConfigurationSetName?: string;
 }
 
-export interface ISesSendEmailArgs extends ISesBaseEventArgs {
-  ToAddresses: string[];
-  Source: string;
-  EmailType: EmailTypes;
-  data: EmailTypeDataArgs;
-}
-
-export type EmailTypeDataArgs = IRegisterUserEmailInformation;
+export type EmailTypeDataArgs = IUserEmailInformation;
 export type ISendEmailData =
   | IForgotPasswordEmailInformation
-  | IRegisterUserEmailInformation;
+  | IUserEmailInformation;
 
 export interface IForgotPasswordEmailInformation {
   firstName: string;
@@ -24,10 +19,7 @@ export interface IForgotPasswordEmailInformation {
   link: string;
 }
 
-export interface ISendEmail extends IAWSConfig {
-  ToAddresses: string[];
-  ConfigurationSetName: string;
-  Source: string;
+export interface ISendEmailArgs extends ISesBaseEventArgs {
   EmailType: EmailTypes;
   data?: ISendEmailData;
 }

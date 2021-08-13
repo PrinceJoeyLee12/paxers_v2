@@ -1,7 +1,4 @@
-import {
-  IMessageToQueueRegisterUserArgs,
-  IRegisterUserEmailInformation,
-} from './user';
+import { IMessageToQueueRegisterUserArgs, IUserEmailInformation } from './user';
 
 export * from './user';
 export interface ISendMessageToQueueEmailParams {
@@ -21,5 +18,5 @@ export interface ISendMessageToQueueEmailParams {
 
 export type ISendEmailMessageToQueueArgs = IMessageToQueueRegisterUserArgs;
 
-declare type IEmailMessageBody = IRegisterUserEmailInformation;
+declare type IEmailMessageBody = IUserEmailInformation;
 export declare type IMessageBody = IEmailMessageBody;

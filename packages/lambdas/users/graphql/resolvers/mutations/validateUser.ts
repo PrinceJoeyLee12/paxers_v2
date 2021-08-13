@@ -1,24 +1,22 @@
 import {
   IUserLoginMutationArgs,
-  IUserLoginObject,
+  IGetItemBaseDynamoParams,
   IJwtPayload,
   ERequest,
+  IBaseUseObject,
 } from 'pxrs-schemas';
 import { DynamoDB } from 'aws-sdk';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { ApolloError } from 'apollo-server-lambda';
-import { GetItemInput } from 'aws-sdk/clients/dynamodb';
 import { jwt as JWT } from 'pxrs-service-common';
 
 interface Response {
   message: string;
   token?: string;
-  // TODO change any for user
-  user?: any | null;
+  user?: IBaseUseObject | null;
 }
 
-async function validateUserMutation(
+async function validateUser(
   _: any,
   args: IUserLoginMutationArgs
 ): Promise<Response> {
@@ -34,15 +32,16 @@ async function validateUserMutation(
 
   const dynamodb = new DynamoDB.DocumentClient();
 
-  const params: GetItemInput = {
+  // IValidateUserDynamodbParams
+  const params: IGetItemBaseDynamoParams = {
     TableName: `${process.env.SERVICE}-${process.env.DYNAMODB_USERTABLE}-${process.env.STAGE}`,
-    Key: { email: { S: email } },
-    ProjectionExpression: 'email',
+    Key: { email },
   };
 
   return new Promise((resolve, reject) => {
     dynamodb.get(params, async (err: any, data: any) => {
       if (!err && Object.keys(data).length !== 0) {
+        // 1. Check if password matched
         const isMatch = await bcrypt.compare(password, data.Item.password);
         if (isMatch) {
           const payload: IJwtPayload = {
@@ -62,6 +61,8 @@ async function validateUserMutation(
           );
           response.token = token;
           response.user = data.Item;
+          response.user.password = 'hidden';
+          console.log(response);
           resolve(response);
         } else
           reject(
@@ -77,4 +78,4 @@ async function validateUserMutation(
   });
 }
 
-export default validateUserMutation;
+export default validateUser;

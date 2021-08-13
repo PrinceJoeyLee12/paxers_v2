@@ -1,10 +1,7 @@
-import {
-  IRegisterUserEmailInformation,
-  ISendEmailMessageToQueueArgs,
-} from '../emails';
+import { IUserEmailInformation, ISendEmailMessageToQueueArgs } from '../emails';
 import { EmailTypes } from '../constants';
 
-export type ISqsSendEmailEventBody = IRegisterUserEmailInformation;
+export type ISqsSendEmailEventBody = IUserEmailInformation;
 type ISqsEventBody = ISqsSendEmailEventBody;
 
 type ISqsMessageAttributes = ISqsSendEmailMessageAttributes;

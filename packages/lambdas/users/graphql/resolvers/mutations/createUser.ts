@@ -6,7 +6,7 @@ import { sqsBaseUrl } from '../../../../constants/default';
 
 import {
   IUserRegistrationMutationArgs,
-  IUserRegistrationObject,
+  IBaseUseObject,
   IMessageToQueueRegisterUserArgs,
   EmailTypes,
   IJwtPayload,
@@ -20,10 +20,10 @@ import { sendMessageToQueue, jwt as JWT } from 'pxrs-service-common';
 interface Response {
   message: string;
   token?: string;
-  user?: IUserRegistrationObject;
+  user?: IBaseUseObject;
 }
 
-async function createUserMutation(
+async function createUser(
   _: any,
   args: IUserRegistrationMutationArgs
 ): Promise<Response> {
@@ -56,18 +56,6 @@ async function createUserMutation(
   response.user = {
     ...params.Item,
   };
-  const sqsArgs: IMessageToQueueRegisterUserArgs = {
-    recipientEmails: [email],
-    validatedEmail: process.env.VALIDATED_EMAIL,
-    typeOfEmail: EmailTypes.ACCOUNT_ACTIVATION_EMAIL,
-    emailInformation: {
-      firstName,
-      lastName,
-      recipientEmail: [email],
-      redirectURL: '',
-    },
-    QueueUrl: `${sqsBaseUrl}/${process.env.SERVICE}-${process.env.SQS_EMAIL_SENDER}-${process.env.STAGE}`,
-  };
 
   return new Promise((resolve, reject) => {
     // TODO Soon use salesforce organize customers and OTKA for signing in
@@ -94,7 +82,19 @@ async function createUserMutation(
         );
 
         // 3. Send Message to SQS for account email activation processing
-        sqsArgs.emailInformation.redirectURL = `${process.env.HOSTNAME}/account-activation/${token}`;
+        const sqsArgs: IMessageToQueueRegisterUserArgs = {
+          recipientEmails: [email],
+          validatedEmail: process.env.VALIDATED_EMAIL,
+          typeOfEmail: EmailTypes.ACCOUNT_ACTIVATION_EMAIL,
+          emailInformation: {
+            firstName,
+            lastName,
+            recipientEmail: [email],
+            redirectURL: `${process.env.HOSTNAME}/account-activation/${token}`,
+          },
+          QueueUrl: `${sqsBaseUrl}/${process.env.SERVICE}-${process.env.SQS_EMAIL_SENDER}-${process.env.STAGE}`,
+        };
+
         const inQueue = await sendMessageToQueue(sqsArgs);
         response.token = token;
         if (inQueue) {
@@ -127,4 +127,4 @@ async function createUserMutation(
   });
 }
 
-export default createUserMutation;
+export default createUser;

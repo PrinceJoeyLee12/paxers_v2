@@ -2,7 +2,7 @@ export {
   IUserRegistrationMutationArgs,
   IUserLoginMutationArgs,
 } from './UserArgs';
-export { IUserRegistrationObject, IUserLoginObject } from './UserObject';
+export { IBaseUseObject, IUserLoginObject } from './UserObject';
 
 export interface IJwtPayloadCreateUser {
   user: {
