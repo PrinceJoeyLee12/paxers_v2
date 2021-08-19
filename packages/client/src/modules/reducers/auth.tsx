@@ -43,7 +43,7 @@ export default function (state = initialState, action: any) {
       // };
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     case REGISTER_SUCCESS:
       return {

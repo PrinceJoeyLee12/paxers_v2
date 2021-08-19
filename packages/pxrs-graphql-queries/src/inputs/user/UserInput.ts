@@ -12,4 +12,8 @@ export default `
   input UserForgotPasswordInput {
     email: String!
   }
+  input UserResetPasswordInput {
+    token: String!
+    newPassword: String!
+  }
 `;

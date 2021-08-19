@@ -1,19 +1,22 @@
 import {
   IUserLoginMutationArgs,
-  IGetItemBaseDynamoParams,
   IJwtPayload,
   ERequest,
   IBaseUseObject,
+  ApolloErrorCode,
+  UserErrorMessage,
 } from 'pxrs-schemas';
 import { DynamoDB } from 'aws-sdk';
 import bcrypt from 'bcryptjs';
 import { ApolloError } from 'apollo-server-lambda';
+import { userTableNameDev } from '../../../../constants/default';
 import { jwt as JWT } from 'pxrs-service-common';
 
 interface Response {
   message: string;
   token?: string;
   user?: IBaseUseObject | null;
+  status: number;
 }
 
 async function validateUser(
@@ -23,22 +26,22 @@ async function validateUser(
   const {
     input: { email, password },
   } = args;
-
-  let response: Response = {
-    message: '',
-    token: '',
-    user: null,
-  };
-
   const dynamodb = new DynamoDB.DocumentClient();
 
-  // IValidateUserDynamodbParams
-  const params: IGetItemBaseDynamoParams = {
-    TableName: `${process.env.SERVICE}-${process.env.DYNAMODB_USERTABLE}-${process.env.STAGE}`,
+  let response: Response = {
+    message: 'User successfully validated',
+    token: '',
+    user: null,
+    status: 200,
+  };
+
+  const params = {
+    TableName: userTableNameDev,
     Key: { email },
   };
 
   return new Promise((resolve, reject) => {
+    // 1. Get email
     dynamodb.get(params, async (err: any, data: any) => {
       if (!err && Object.keys(data).length !== 0) {
         // 1. Check if password matched
@@ -66,12 +69,18 @@ async function validateUser(
           resolve(response);
         } else
           reject(
-            new ApolloError('Email or Password is incorrect!', 'BAD_USER_INPUT')
+            new ApolloError(
+              UserErrorMessage.EMAIL_PASSWORD_INCORRECT,
+              ApolloErrorCode.BAD_USER_INPUT
+            )
           );
       } else {
         console.error('Error Message is : ', err);
         reject(
-          new ApolloError("User Doesn't Exist Yet!!", 'REQUEST_NOT_FOUND')
+          new ApolloError(
+            UserErrorMessage.EMAIL_DONT_EXIST,
+            ApolloErrorCode.REQUEST_NOT_FOUND
+          )
         );
       }
     });

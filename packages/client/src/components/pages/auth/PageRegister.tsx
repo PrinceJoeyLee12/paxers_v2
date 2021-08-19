@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { register } from '../../../actions/auth';
-import { User } from '../../../interfaces/user';
+import { register } from '../../../modules/actions/auth';
+import { User } from '../../../types/user';
 import {
   Grid,
   Button,
@@ -92,21 +92,21 @@ const PageRegister: React.FC<Props> = ({ register }) => {
   return (
     <>
       {/* <ToastContainer /> */}
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <UserPlusIcon />
           </Avatar>
-          <Typography component='h1' variant='h5'>
+          <Typography component="h1" variant="h5">
             Sign up
           </Typography>
           <Grid
             container
             spacing={2}
-            direction='row'
-            justify='center'
-            alignItems='center'
+            direction="row"
+            justify="center"
+            alignItems="center"
             className={classes.form}
           >
             <Grid item xs={12}>
@@ -141,9 +141,9 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                     <Grid
                       container
                       spacing={2}
-                      direction='row'
-                      justify='center'
-                      alignItems='center'
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
                     >
                       <Grid item xs={12} md={6}>
                         <TextField
@@ -151,9 +151,9 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                           value={values.firstName}
                           error={errors.firstName ? true : false}
                           helperText={errors.firstName}
-                          name='firstName'
-                          label='First Name'
-                          type='text'
+                          name="firstName"
+                          label="First Name"
+                          type="text"
                           onChange={handleChange}
                         />
                       </Grid>
@@ -162,9 +162,9 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                           value={values.lastName}
                           error={errors.lastName ? true : false}
                           helperText={errors.lastName}
-                          name='lastName'
-                          label='Last Name'
-                          type='text'
+                          name="lastName"
+                          label="Last Name"
+                          type="text"
                           onChange={handleChange}
                         />
                       </Grid>
@@ -173,9 +173,9 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                           value={values.email}
                           error={errors.email || apiErrors.email ? true : false}
                           helperText={errors.email || apiErrors.email}
-                          name='email'
-                          label='Email'
-                          type='email'
+                          name="email"
+                          label="Email"
+                          type="email"
                           onChange={handleChange}
                         />
                       </Grid>
@@ -183,10 +183,10 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                         <TextField
                           value={values.password}
                           error={errors.password ? true : false}
-                          name='password'
-                          helperText='Must Be At Least 8 Characters Must Have At Least One Uppercase, One Lowercase And One Number'
-                          label='Password'
-                          type='password'
+                          name="password"
+                          helperText="Must Be At Least 8 Characters Must Have At Least One Uppercase, One Lowercase And One Number"
+                          label="Password"
+                          type="password"
                           onChange={handleChange}
                         />
                       </Grid>
@@ -194,19 +194,19 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                         <TextField
                           value={values.passwordConfirm}
                           error={errors.passwordConfirm ? true : false}
-                          name='passwordConfirm'
+                          name="passwordConfirm"
                           helperText={errors.passwordConfirm}
-                          label='Confirm Password'
-                          type='password'
+                          label="Confirm Password"
+                          type="password"
                           onChange={handleChange}
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <Button
-                          type='submit'
-                          color='primary'
+                          type="submit"
+                          color="primary"
                           fullWidth
-                          variant='contained'
+                          variant="contained"
                           disabled={(isSubmitting || !isValid) && !submitted}
                         >
                           {submitted && success
@@ -228,9 +228,9 @@ const PageRegister: React.FC<Props> = ({ register }) => {
               </Formik>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
-                alignItems='center'
+                direction="row"
+                justify="space-between"
+                alignItems="center"
               >
                 <Grid item xs={6} className={classes.Links}></Grid>
                 <Grid
@@ -238,8 +238,8 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                   xs={6}
                   className={classnames(classes.Links, classes.end)}
                 >
-                  <Link to='/login' style={{ textDecoration: 'none' }}>
-                    <Typography color='primary' variant='body1'>
+                  <Link to="/login" style={{ textDecoration: 'none' }}>
+                    <Typography color="primary" variant="body1">
                       Login Here
                     </Typography>
                   </Link>

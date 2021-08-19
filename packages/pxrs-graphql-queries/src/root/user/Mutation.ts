@@ -1,7 +1,8 @@
 export default `
   type Mutation {
-    createUser(input: UserRegisterInput!): ResponseObject!
-    validateUser(input: UserLoginInput!): ResponseObject!
-    forgotPassword(input: UserForgotPasswordInput!): ResponseObject!
+    createUser(input: UserRegisterInput!): UserCreateResponseObject!
+    validateUser(input: UserLoginInput!): UserValidateResponseObject!
+    forgotPassword(input: UserForgotPasswordInput!): UserForgotPasswordResponseObject!
+    resetPassword(input: UserResetPasswordInput!): UserResetPasswordResponseObject
   }
 `;

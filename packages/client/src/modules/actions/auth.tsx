@@ -1,8 +1,8 @@
 import { Dispatch } from 'redux';
-import api from '../utils/api';
+import api from '../../utils/api';
 
 //interfaces
-import { User, UserResetPassword } from '../interfaces/user';
+import { User, UserResetPassword } from '../../types/user';
 import {
   AUTH_ERROR,
   REGISTER_SUCCESS,

@@ -5,8 +5,8 @@ import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 // import { ToastContainer, toast } from 'react-toastify';
-import { resetPassword } from '../../../actions/auth';
-import { UserResetPassword } from '../../../interfaces/user';
+import { resetPassword } from '../../../modules/actions/auth';
+import { UserResetPassword } from '../../../types/user';
 import {
   Grid,
   Button,
@@ -104,21 +104,21 @@ const PageResetPassword: React.FC<Props> = (
   return (
     <Fragment>
       {/* <ToastContainer /> */}
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <SettingsOutlinedIcon />
           </Avatar>
-          <Typography component='h1' variant='h5'>
+          <Typography component="h1" variant="h5">
             Reset Password
           </Typography>
           <Grid
             container
             spacing={2}
-            direction='row'
-            justify='center'
-            alignItems='center'
+            direction="row"
+            justify="center"
+            alignItems="center"
             className={classes.form}
           >
             <Grid item xs={12}>
@@ -155,18 +155,18 @@ const PageResetPassword: React.FC<Props> = (
                     <Grid
                       container
                       spacing={2}
-                      direction='row'
-                      justify='center'
-                      alignItems='center'
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
                     >
                       <Grid item xs={12}>
                         <TextField
                           value={values.password}
                           error={errors.password ? true : false}
-                          name='password'
-                          helperText='Must Contain At Least 8 Characters Must Have At Least One Uppercase, One Lowercase And One Number'
-                          label='New Password'
-                          type='password'
+                          name="password"
+                          helperText="Must Contain At Least 8 Characters Must Have At Least One Uppercase, One Lowercase And One Number"
+                          label="New Password"
+                          type="password"
                           onChange={handleChange}
                         />
                       </Grid>
@@ -174,19 +174,19 @@ const PageResetPassword: React.FC<Props> = (
                         <TextField
                           value={values.passwordConfirm}
                           error={errors.passwordConfirm ? true : false}
-                          name='passwordConfirm'
+                          name="passwordConfirm"
                           helperText={errors.passwordConfirm}
-                          label='Confirm New Password'
-                          type='password'
+                          label="Confirm New Password"
+                          type="password"
                           onChange={handleChange}
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <Button
-                          type='submit'
-                          color='primary'
+                          type="submit"
+                          color="primary"
                           fullWidth
-                          variant='contained'
+                          variant="contained"
                           disabled={(isSubmitting || !isValid) && !submitted}
                         >
                           {submitted && success
@@ -208,9 +208,9 @@ const PageResetPassword: React.FC<Props> = (
               </Formik>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
-                alignItems='center'
+                direction="row"
+                justify="space-between"
+                alignItems="center"
               >
                 <Grid item xs={6} className={classes.Links}></Grid>
                 <Grid
@@ -218,8 +218,8 @@ const PageResetPassword: React.FC<Props> = (
                   xs={6}
                   className={classnames(classes.Links, classes.end)}
                 >
-                  <Link to='/login' style={{ textDecoration: 'none' }}>
-                    <Typography color='primary' variant='body1'>
+                  <Link to="/login" style={{ textDecoration: 'none' }}>
+                    <Typography color="primary" variant="body1">
                       Login Here
                     </Typography>
                   </Link>

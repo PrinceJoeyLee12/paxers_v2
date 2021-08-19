@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import FallBack from '../../layouts/FallBack';
+import FallBack from '../../../layouts/FallBack';
 
 //components
 const PageLogin = React.lazy(() => import('./PageLogin'));

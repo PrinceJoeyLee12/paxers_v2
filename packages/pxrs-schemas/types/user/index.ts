@@ -4,13 +4,9 @@ export {
 } from './UserArgs';
 export { IBaseUseObject, IUserLoginObject } from './UserObject';
 
-export interface IJwtPayloadCreateUser {
+export interface IJwtUserPayload {
   user: {
-    id: string;
-  };
-}
-export interface IJwtPayloadValidateUser {
-  user: {
-    email: string;
+    id?: string;
+    email?: string;
   };
 }

@@ -60,10 +60,6 @@ functions:
           private: true
           path: /graphql/user/validate
           method: post
-      - http:
-          private: true
-          path: /graphql/user/validate
-          method: get
   user-reset-password:  
     name: ${self:provider.stage}-user-reset-password-function
     handler: handler.GraphqlHandler
@@ -71,6 +67,14 @@ functions:
       - http:
           private: true
           path: /graphql/user/reset-password
+          method: post
+  user-forgot-password:  
+    name: ${self:provider.stage}-user-forgot-password-function
+    handler: handler.GraphqlHandler
+    events:
+      - http:
+          private: true
+          path: /graphql/user/forgot-password
           method: post
   send-email:
     name: ${self:provider.stage}-send-email-function
@@ -96,9 +100,9 @@ resources:
       Properties:
         AttributeDefinitions:
           - AttributeName: email
-            AttributeType: S
+            AttributeType: HASH
           - AttributeName: id
-            AttributeType: S
+            AttributeType: HASH
         KeySchema:
           - AttributeName: email
             KeyType: HASH

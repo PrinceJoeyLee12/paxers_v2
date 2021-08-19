@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { login } from '../../../actions/auth';
-import { User } from '../../../interfaces/user';
+import { login } from '../../../modules/actions/auth';
+import { User } from '../../../types/user';
 import {
   Grid,
   Button,
@@ -88,21 +88,21 @@ const PageLogin: React.FC<Props> = ({ login }) => {
   return (
     <>
       {/* <ToastContainer /> */}
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <AccountCircleOutlined />
           </Avatar>
-          <Typography component='h1' variant='h5'>
+          <Typography component="h1" variant="h5">
             Sign In
           </Typography>
           <Grid
             container
             spacing={2}
-            direction='row'
-            justify='center'
-            alignItems='center'
+            direction="row"
+            justify="center"
+            alignItems="center"
             className={classes.form}
           >
             <Grid item xs={12}>
@@ -129,9 +129,9 @@ const PageLogin: React.FC<Props> = ({ login }) => {
                     <Grid
                       container
                       spacing={2}
-                      direction='row'
-                      justify='center'
-                      alignItems='center'
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
                     >
                       <Grid item xs={12}>
                         <TextField
@@ -142,9 +142,9 @@ const PageLogin: React.FC<Props> = ({ login }) => {
                             errors.email || apiErrors?.email ? true : false
                           }
                           helperText={errors.email || apiErrors?.email}
-                          name='email'
-                          label='Email'
-                          type='email'
+                          name="email"
+                          label="Email"
+                          type="email"
                           onChange={handleChange}
                         />
                       </Grid>
@@ -152,9 +152,9 @@ const PageLogin: React.FC<Props> = ({ login }) => {
                         <TextField
                           fullWidth
                           value={values.password}
-                          name='password'
-                          label='Password'
-                          type='password'
+                          name="password"
+                          label="Password"
+                          type="password"
                           error={
                             errors.password || apiErrors?.password
                               ? true
@@ -166,10 +166,10 @@ const PageLogin: React.FC<Props> = ({ login }) => {
                       </Grid>
                       <Grid item xs={12}>
                         <Button
-                          type='submit'
-                          color='primary'
+                          type="submit"
+                          color="primary"
                           fullWidth
-                          variant='contained'
+                          variant="contained"
                           disabled={
                             (isSubmitting || !isValid) &&
                             (!submitted || success)
@@ -194,16 +194,16 @@ const PageLogin: React.FC<Props> = ({ login }) => {
               </Formik>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
-                alignItems='center'
+                direction="row"
+                justify="space-between"
+                alignItems="center"
               >
                 <Grid item xs={12} sm={6} className={classes.Links}>
                   <Link
-                    to='/forgot-password'
+                    to="/forgot-password"
                     style={{ textDecoration: 'none' }}
                   >
-                    <Typography color='primary' variant='body1'>
+                    <Typography color="primary" variant="body1">
                       Forgot Password ?
                     </Typography>
                   </Link>
@@ -217,8 +217,8 @@ const PageLogin: React.FC<Props> = ({ login }) => {
                     isMobile ? classes.start : classes.end
                   )}
                 >
-                  <Link to='/register' style={{ textDecoration: 'none' }}>
-                    <Typography color='primary' variant='body1'>
+                  <Link to="/register" style={{ textDecoration: 'none' }}>
+                    <Typography color="primary" variant="body1">
                       Register Here
                     </Typography>
                   </Link>

@@ -5,16 +5,16 @@ import './App.css';
 import { ApolloProvider } from '@apollo/client/react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
-import Routes from '../components/routing/Routes';
+import Routes from '../routing/Routes';
 
 //Redux
 import { Provider } from 'react-redux';
-import store from '../store';
+import store from '../../store';
 
 //Actions
-import setAuthToken from '../utils/setAuthToken';
-import { loadUser } from '../actions/auth';
-import { LOGOUT } from '../actions/types';
+import setAuthToken from '../../utils/setAuthToken';
+import { loadUser } from '../../modules/actions/auth';
+import { LOGOUT } from '../../modules/actions/types';
 
 export const client = new ApolloClient({
   uri: '/graphql',
@@ -37,7 +37,7 @@ function App() {
     });
   }, []);
   return (
-    <div className='App'>
+    <div className="App">
       <Provider store={store}>
         <ApolloProvider client={client}>
           <Router>

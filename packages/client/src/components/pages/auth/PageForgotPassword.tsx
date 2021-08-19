@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 import classnames from 'classnames';
 import { Form, TextField } from '../../utils/FormElements';
-import { forgotPassword } from '../../../actions/auth';
+import { forgotPassword } from '../../../modules/actions/auth';
 import {
   Grid,
   Avatar,
@@ -93,34 +93,34 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
   return (
     <Fragment>
       {/* <ToastContainer /> */}
-      <Container component='main' maxWidth='xs'>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <MailOutlineIcon />
           </Avatar>
           <Typography
-            component='h6'
-            variant='h6'
+            component="h6"
+            variant="h6"
             className={classes.Typography}
           >
             Forgot Password
           </Typography>
-          <Typography component='p' variant='h6'>
+          <Typography component="p" variant="h6">
             Change your password in three easy steps. This will help you to
             secure your password!
           </Typography>
           <List>
             <ListItem>
-              <Typography component='p'>1. Email address below.</Typography>
+              <Typography component="p">1. Email address below.</Typography>
             </ListItem>
             <ListItem>
-              <Typography component='p'>
+              <Typography component="p">
                 2. Will send you a temporary link.
               </Typography>
             </ListItem>
             <ListItem>
-              <Typography component='p'>
+              <Typography component="p">
                 3. Use the link to reset your password
               </Typography>
             </ListItem>
@@ -129,9 +129,9 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
           <Grid
             container
             spacing={2}
-            direction='row'
-            justify='center'
-            alignItems='center'
+            direction="row"
+            justify="center"
+            alignItems="center"
             className={classes.form}
           >
             <Grid item xs={12}>
@@ -162,9 +162,9 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
                     <Grid
                       container
                       spacing={2}
-                      direction='row'
-                      justify='center'
-                      alignItems='center'
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
                     >
                       <Grid item xs={12}>
                         <TextField
@@ -173,18 +173,18 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
                           value={values.email}
                           error={errors.email || apiErrors.email ? true : false}
                           helperText={errors.email || apiErrors.email}
-                          name='email'
-                          label='Email'
-                          type='email'
+                          name="email"
+                          label="Email"
+                          type="email"
                           onChange={handleChange}
                         />
                       </Grid>
                       <Grid item xs={12}>
                         <Button
-                          type='submit'
-                          color='primary'
+                          type="submit"
+                          color="primary"
                           fullWidth
-                          variant='contained'
+                          variant="contained"
                           disabled={(isSubmitting || !isValid) && !submitted}
                         >
                           {submitted && success
@@ -206,9 +206,9 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
               </Formik>
               <Grid
                 container
-                direction='row'
-                justify='space-between'
-                alignItems='center'
+                direction="row"
+                justify="space-between"
+                alignItems="center"
               >
                 <Grid item xs={6} className={classes.Links}></Grid>
                 <Grid
@@ -216,8 +216,8 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
                   xs={6}
                   className={classnames(classes.Links, classes.end)}
                 >
-                  <Link to='/login' style={{ textDecoration: 'none' }}>
-                    <Typography color='primary' variant='body1'>
+                  <Link to="/login" style={{ textDecoration: 'none' }}>
+                    <Typography color="primary" variant="body1">
                       Login Here
                     </Typography>
                   </Link>

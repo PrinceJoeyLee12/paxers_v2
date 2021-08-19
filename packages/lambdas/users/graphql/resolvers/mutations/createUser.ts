@@ -2,7 +2,7 @@ import { DynamoDB } from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 import { ApolloError } from 'apollo-server-lambda';
-import { sqsBaseUrl } from '../../../../constants/default';
+import { UserSqsUrl, userTableNameDev } from '../../../../constants/default';
 
 import {
   IUserRegistrationMutationArgs,
@@ -10,9 +10,12 @@ import {
   IMessageToQueueRegisterUserArgs,
   EmailTypes,
   IJwtPayload,
-  IRegisterUserDynamodbParams,
+  IDynamodbParams,
   EDynamodbConditionExpression,
   ERequest,
+  EDynamoDBError,
+  EApolloCustomErrors,
+  UserErrorMessage,
 } from 'pxrs-schemas';
 
 import { sendMessageToQueue, jwt as JWT } from 'pxrs-service-common';
@@ -39,8 +42,8 @@ async function createUser(
 
   const dynamodb = new DynamoDB.DocumentClient();
 
-  const params: IRegisterUserDynamodbParams = {
-    TableName: `${process.env.SERVICE}-${process.env.DYNAMODB_USERTABLE}-${process.env.STAGE}`,
+  const params: IDynamodbParams = {
+    TableName: userTableNameDev,
     Item: {
       id: uuidv4(),
       firstName,
@@ -62,8 +65,6 @@ async function createUser(
     // 1. Put User to dynamoDB
     dynamodb.put(params, async (err) => {
       if (!err) {
-        console.log('Successfully inserted');
-
         const payload: IJwtPayload = {
           user: {
             id: params.Item.id,
@@ -92,33 +93,31 @@ async function createUser(
             recipientEmail: [email],
             redirectURL: `${process.env.HOSTNAME}/account-activation/${token}`,
           },
-          QueueUrl: `${sqsBaseUrl}/${process.env.SERVICE}-${process.env.SQS_EMAIL_SENDER}-${process.env.STAGE}`,
+          QueueUrl: UserSqsUrl,
         };
 
         const inQueue = await sendMessageToQueue(sqsArgs);
         response.token = token;
         if (inQueue) {
-          response.message = `User Successfully inserted and Email Activation was sent to ${email}`;
+          response.message = '';
         } else {
-          response.message =
-            "User Successfully inserted but activation mail wasn't sent this is a SERVER-SIDE_ERROR";
+          response.message = '';
         }
         resolve(response);
       } else {
         console.log('ERROR IS: ', err);
-        // TODO error handling
-        if (err.code === 'ConditionalCheckFailedException') {
+        if (err.code === EDynamoDBError.CONDITIONAL_EXCEPTION) {
           reject(
             new ApolloError(
-              'Email already existed! Try Logging in',
-              'BAD_USER_INPUT'
+              UserErrorMessage.USER_ALREADY_EXISTED,
+              EApolloCustomErrors.BAD_USER_REQUEST
             )
           );
         } else {
           reject(
             new ApolloError(
-              "There's problem logging user. Please try again later!",
-              'INTERNAL_SERVER_ERROR'
+              UserErrorMessage.CREATE_USER_ERROR,
+              EApolloCustomErrors.INTERNAL_SERVER_ERROR
             )
           );
         }
