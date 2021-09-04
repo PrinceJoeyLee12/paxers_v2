@@ -1,7 +1,8 @@
+import React from 'react';
 // material
 import { Box, Grid, Container, Typography } from '@material-ui/core';
 // components
-import Page from '../components/Page';
+import Page from '../molecules/PageHelmet/Page';
 import {
   AppTasks,
   AppNewUsers,
@@ -15,7 +16,7 @@ import {
   AppTrafficBySite,
   AppCurrentSubject,
   AppConversionRates,
-} from '../components/_dashboard/app';
+} from '../organisms/AppDashboard';
 
 // ----------------------------------------------------------------------
 

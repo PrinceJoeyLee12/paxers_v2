@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 // material
-import { CssBaseline, ThemeOptions } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core';
 import {
   ThemeProvider,
   createTheme,
@@ -16,11 +16,7 @@ import shadows, { customShadows } from './shadows';
 
 // ----------------------------------------------------------------------
 
-interface Props {
-  children: React.ReactChildren;
-}
-
-const ThemeConfig: React.FC<Props> = ({ children }): any => {
+const ThemeConfig: React.FC = ({ children }): any => {
   const themeOptions: any = useMemo(
     () => ({
       palette,

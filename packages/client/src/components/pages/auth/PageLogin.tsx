@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
 import { login } from '../../../modules/actions/auth';
 import { User } from '../../../types/user';
 import {
@@ -22,7 +21,7 @@ import classnames from 'classnames';
 import { Form, TextField } from '../../utils/FormElements';
 import AccountCircleOutlined from '@material-ui/icons/AccountCircleOutlined';
 import { green } from '@material-ui/core/colors';
-const useStyles = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   paper: {
     marginTop: theme.spacing(6),
     display: 'flex',
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette?.secondary.main,
   },
   buttonProgress: {
     color: green[500],
@@ -63,7 +62,7 @@ const LoginValidationSchema = Yup.object().shape({
   password: Yup.string().required('Password field is required'),
 });
 
-interface Props extends RouteComponentProps {
+interface Props {
   login: (formData: User, setResponse: any) => any;
 }
 
@@ -101,7 +100,6 @@ const PageLogin: React.FC<Props> = ({ login }) => {
             container
             spacing={2}
             direction="row"
-            justify="center"
             alignItems="center"
             className={classes.form}
           >
@@ -130,7 +128,6 @@ const PageLogin: React.FC<Props> = ({ login }) => {
                       container
                       spacing={2}
                       direction="row"
-                      justify="center"
                       alignItems="center"
                     >
                       <Grid item xs={12}>
@@ -192,12 +189,7 @@ const PageLogin: React.FC<Props> = ({ login }) => {
                   </Form>
                 )}
               </Formik>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
+              <Grid container direction="row" alignItems="center">
                 <Grid item xs={12} sm={6} className={classes.Links}>
                   <Link
                     to="/forgot-password"

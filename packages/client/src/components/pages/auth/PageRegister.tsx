@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { register } from '../../../modules/actions/auth';
@@ -21,7 +20,7 @@ import { Form, TextField } from '../../utils/FormElements';
 import { UserPlus as UserPlusIcon } from 'react-feather';
 import { green } from '@material-ui/core/colors';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   paper: {
     marginTop: theme.spacing(6),
     display: 'flex',
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette?.secondary.main,
   },
   buttonProgress: {
     color: green[500],
@@ -69,7 +68,7 @@ const RegisterValidationSchema = Yup.object().shape({
     .required('Confirm Password Is Required'),
 });
 
-interface Props extends RouteComponentProps {
+interface Props {
   register: (formData: User, setResponse: any) => any;
 }
 
@@ -105,7 +104,6 @@ const PageRegister: React.FC<Props> = ({ register }) => {
             container
             spacing={2}
             direction="row"
-            justify="center"
             alignItems="center"
             className={classes.form}
           >
@@ -142,7 +140,6 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                       container
                       spacing={2}
                       direction="row"
-                      justify="center"
                       alignItems="center"
                     >
                       <Grid item xs={12} md={6}>
@@ -226,12 +223,7 @@ const PageRegister: React.FC<Props> = ({ register }) => {
                   </Form>
                 )}
               </Formik>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
+              <Grid container direction="row" alignItems="center">
                 <Grid item xs={6} className={classes.Links}></Grid>
                 <Grid
                   item

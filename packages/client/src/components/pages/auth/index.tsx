@@ -1,5 +1,4 @@
 import React, { Suspense } from 'react';
-import { RouteComponentProps } from 'react-router';
 
 import FallBack from '../../../layouts/FallBack';
 
@@ -9,7 +8,7 @@ const PageForgotPassword = React.lazy(() => import('./PageForgotPassword'));
 const PageRegister = React.lazy(() => import('./PageRegister'));
 const PageResetPassword = React.lazy(() => import('./PageResetPassword'));
 
-const AuthenticationPages: React.FC<RouteComponentProps> = (props) => {
+const AuthenticationPages: React.FC<any> = (props) => {
   return (
     <>
       <Suspense fallback={<FallBack />}>

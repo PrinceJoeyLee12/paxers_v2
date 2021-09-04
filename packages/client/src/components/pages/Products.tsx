@@ -1,17 +1,18 @@
+import React from 'react';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 // material
 import { Container, Stack, Typography } from '@material-ui/core';
 // components
-import Page from '../components/Page';
+import Page from '../molecules/PageHelmet/Page';
 import {
   ProductSort,
   ProductList,
   ProductCartWidget,
   ProductFilterSidebar,
-} from '../components/_dashboard/products';
+} from '../organisms/Products';
 //
-import PRODUCTS from '../_mocks_/products';
+import PRODUCTS from '../../_mocks_/products';
 
 // ----------------------------------------------------------------------
 

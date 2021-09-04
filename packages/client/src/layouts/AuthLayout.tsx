@@ -4,9 +4,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 // components
-import Logo from '../components/Logo';
+import Logo from '../components/molecules/Logo/Logo';
 //
-import { MHidden } from '../components/@material-extend';
+import { MHidden } from '../components/atoms/@material-extend';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ const HeaderStyle = styled('header')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 interface Props {
-  children: React.ReactChildren;
+  children: React.ReactNode;
 }
 
 const AuthLayout: React.FC<Props> = ({ children }) => {

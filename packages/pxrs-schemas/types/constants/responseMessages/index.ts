@@ -1,1 +1,1 @@
-export * from './user';
+export * as UserApolloResponseMessage from './user';

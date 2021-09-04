@@ -1,7 +1,5 @@
 import React, { Fragment, useState, useRef, useEffect } from 'react';
 // import { withRouter } from 'react-router';
-
-import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 // import { ToastContainer, toast } from 'react-toastify';
@@ -25,7 +23,7 @@ import { green } from '@material-ui/core/colors';
 import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
 
 //Page Styles
-const useStyles = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   paper: {
     marginTop: theme.spacing(6),
     display: 'flex',
@@ -44,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette?.secondary.main,
   },
   buttonProgress: {
     color: green[500],
@@ -68,14 +66,11 @@ const RegisterValidationSchema = Yup.object().shape({
     .required('Password field is required'),
 });
 
-interface Props extends RouteComponentProps {
+interface Props {
   resetPassword: (formData: UserResetPassword, setResponse: any) => any;
 }
 
-const PageResetPassword: React.FC<Props> = (
-  props,
-  { match, history }: RouteComponentProps<{ token: string }>
-) => {
+const PageResetPassword: React.FC<Props> = (props, { match, history }: any) => {
   const classes = useStyles();
   const timer: React.MutableRefObject<number | undefined> = useRef();
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -117,7 +112,6 @@ const PageResetPassword: React.FC<Props> = (
             container
             spacing={2}
             direction="row"
-            justify="center"
             alignItems="center"
             className={classes.form}
           >
@@ -156,7 +150,6 @@ const PageResetPassword: React.FC<Props> = (
                       container
                       spacing={2}
                       direction="row"
-                      justify="center"
                       alignItems="center"
                     >
                       <Grid item xs={12}>
@@ -206,12 +199,7 @@ const PageResetPassword: React.FC<Props> = (
                   </Form>
                 )}
               </Formik>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
+              <Grid container direction="row" alignItems="center">
                 <Grid item xs={6} className={classes.Links}></Grid>
                 <Grid
                   item

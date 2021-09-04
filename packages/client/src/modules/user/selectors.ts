@@ -1,0 +1,16 @@
+import { createSelector } from 'reselect';
+
+const rootSelector = createSelector(
+  (state: State.Root) => state.user,
+  (user: State.User): State.User => user
+);
+
+export const userDataSelector = createSelector(
+  rootSelector,
+  (user: State.User): State.UserData => user.data
+);
+
+export const firstNameSelector = createSelector(
+  [userDataSelector],
+  (userData: State.UserData): string => userData.firstName
+);

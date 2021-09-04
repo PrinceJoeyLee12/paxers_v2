@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react';
-import { RouteComponentProps } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -25,7 +24,7 @@ import { green } from '@material-ui/core/colors';
 
 //Custom Styling
 
-const useStyles = makeStyles((theme) => ({
+const useStyles: any = makeStyles((theme: any) => ({
   paper: {
     marginTop: theme.spacing(6),
     display: 'flex',
@@ -34,11 +33,12 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette?.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
+    justify: 'center',
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -70,7 +70,7 @@ const ForgotPasswordValidationSchema = Yup.object().shape({
     .required('Email field is required'),
 });
 
-interface Props extends RouteComponentProps {
+interface Props {
   forgotPassword: (formData: { email: string }, setResponse: any) => any;
 }
 
@@ -130,7 +130,6 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
             container
             spacing={2}
             direction="row"
-            justify="center"
             alignItems="center"
             className={classes.form}
           >
@@ -163,7 +162,6 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
                       container
                       spacing={2}
                       direction="row"
-                      justify="center"
                       alignItems="center"
                     >
                       <Grid item xs={12}>
@@ -204,12 +202,7 @@ const PageForgetPassword: React.FC<Props> = ({ forgotPassword }) => {
                   </Form>
                 )}
               </Formik>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-              >
+              <Grid container direction="row" alignItems="center">
                 <Grid item xs={6} className={classes.Links}></Grid>
                 <Grid
                   item

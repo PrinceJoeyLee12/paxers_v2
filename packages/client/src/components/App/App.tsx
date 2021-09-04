@@ -1,38 +1,46 @@
 import React, { Fragment, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router as ReactRouter } from 'react-router-dom-v5';
 import './App.css';
 
 import { ApolloProvider } from '@apollo/client/react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
-
 import Routes from '../routing/Routes';
 
 //Redux
 import { Provider } from 'react-redux';
-import store from '../../store';
+import { configureStore } from '../../store';
 
 //Actions
 import setAuthToken from '../../utils/setAuthToken';
 import { loadUser } from '../../modules/actions/auth';
 import { LOGOUT } from '../../modules/actions/types';
 
+// routes
+import Router from './routes';
+// theme
+import ThemeConfig from '../../theme';
+// components
+import ScrollToTop from '../atoms/ScrollToTop/ScrollToTop';
+
 export const client = new ApolloClient({
   uri: '/graphql',
   cache: new InMemoryCache(),
 });
 
-function App() {
+const App: React.FC = () => {
+  const { store, history } = configureStore();
+
   //Check Token
   useEffect(() => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
-      store.dispatch(loadUser());
+      //store.dispatch(loadUser());
     }
 
     //Logout user out from all tab
     window.addEventListener('storage', () => {
       if (!localStorage.token) {
-        store.dispatch({ type: LOGOUT });
+        //store.dispatch({ type: LOGOUT });
       }
     });
   }, []);
@@ -40,19 +48,32 @@ function App() {
     <div className="App">
       <Provider store={store}>
         <ApolloProvider client={client}>
-          <Router>
-            {/* <Navbar> */}
-            <Fragment>
-              <Switch>
-                <Route component={Routes} />
-              </Switch>
-            </Fragment>
-            {/* </Navbar> */}
-          </Router>
+          <ThemeConfig>
+            <ScrollToTop />
+            <Router />
+          </ThemeConfig>
         </ApolloProvider>
       </Provider>
     </div>
   );
-}
+};
 
 export default App;
+
+// return (
+//   <div className="App">
+//     <Provider store={store}>
+//       <ApolloProvider client={client}>
+//         <Router>
+//           {/* <Navbar> */}
+//           <Fragment>
+//             <Switch>
+//               <Route component={Routes} />
+//             </Switch>
+//           </Fragment>
+//           {/* </Navbar> */}
+//         </Router>
+//       </ApolloProvider>
+//     </Provider>
+//   </div>
+// );

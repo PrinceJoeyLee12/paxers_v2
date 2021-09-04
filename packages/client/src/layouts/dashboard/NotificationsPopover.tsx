@@ -28,8 +28,8 @@ import {
 // utils
 import { mockImgAvatar } from '../../utils/mockImages';
 // components
-import Scrollbar from '../../components/Scrollbar';
-import MenuPopover from '../../components/MenuPopover';
+import Scrollbar from '../../components/atoms/Scrollbar/Scrollbar';
+import MenuPopover from '../../components/molecules/MenuPopover/MenuPopover';
 
 // ----------------------------------------------------------------------
 
@@ -230,8 +230,8 @@ const NotificationsPopover: React.FC = () => {
           ...(open && {
             bgcolor: (theme) =>
               alpha(
-                theme.palette.primary.main,
-                theme.palette.action.focusOpacity
+                theme.palette?.primary.main,
+                theme.palette?.action.focusOpacity
               ),
           }),
         }}

@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
 // components
-import Logo from '../components/Logo';
+import Logo from '../components/molecules/Logo/Logo';
 
 // ----------------------------------------------------------------------
 
@@ -15,8 +15,8 @@ const HeaderStyle = styled('header')(({ theme }) => ({
   position: 'absolute',
   padding: theme.spacing(3, 3, 0),
   [theme.breakpoints.up('sm')]: {
-    padding: theme.spacing(5, 5, 0)
-  }
+    padding: theme.spacing(5, 5, 0),
+  },
 }));
 
 // ----------------------------------------------------------------------
@@ -32,6 +32,6 @@ const LogoOnlyLayout: React.FC = () => {
       <Outlet />
     </>
   );
-}
+};
 
-export default LogoOnlyLayout
+export default LogoOnlyLayout;

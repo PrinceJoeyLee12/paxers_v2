@@ -17,7 +17,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 // components
-import MenuPopover from '../../components/MenuPopover';
+import MenuPopover from '../../components/molecules/MenuPopover/MenuPopover';
 //
 import account from '../../_mocks_/account';
 
@@ -71,7 +71,7 @@ const AccountPopover: React.FC = () => {
               height: '100%',
               borderRadius: '50%',
               position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72),
+              bgcolor: (theme) => alpha(theme.palette?.grey[900], 0.72),
             },
           }),
         }}

@@ -13,10 +13,10 @@ import {
   Stack,
 } from '@material-ui/core';
 // components
-import Logo from '../../components/Logo';
-import Scrollbar from '../../components/Scrollbar';
-import NavSection from '../../components/NavSection';
-import { MHidden } from '../../components/@material-extend';
+import Logo from '../../components/molecules/Logo/Logo';
+import Scrollbar from '../../components/atoms/Scrollbar/Scrollbar';
+import NavSection from '../../components/molecules/NavSection/NavSection';
+import { MHidden } from '../../components/atoms/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
 import account from '../../_mocks_/account';
@@ -32,12 +32,12 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }));
 
-const AccountStyle = styled('div')(({ theme }) => ({
+const AccountStyle = styled('div')(({ theme }: any) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(2, 2.5),
-  borderRadius: theme.shape.borderRadiusSm,
-  backgroundColor: theme.palette.grey[200],
+  borderRadius: theme.shape?.borderRadiusSm,
+  backgroundColor: theme.palette?.grey[200],
 }));
 
 // ----------------------------------------------------------------------

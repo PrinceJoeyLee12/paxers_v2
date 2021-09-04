@@ -4,19 +4,19 @@ import { Link as RouterLink } from 'react-router-dom';
 // material
 import { Grid, Button, Container, Stack, Typography } from '@material-ui/core';
 // components
-import Page from '../components/Page';
+import Page from '../molecules/PageHelmet/Page';
 import {
   BlogPostCard,
   BlogPostsSort,
   BlogPostsSearch,
-} from '../components/_dashboard/blog';
+} from '../organisms/Blogs';
 //
-import POSTS from '../_mocks_/blog';
+import POSTS from '../../_mocks_/blog';
 import React from 'react';
 
 // ----------------------------------------------------------------------
 
-const SORT_OPTIONS = [
+const SORT_OPTIONS: any = [
   { value: 'latest', label: 'Latest' },
   { value: 'popular', label: 'Popular' },
   { value: 'oldest', label: 'Oldest' },
@@ -45,7 +45,6 @@ const Blog: React.FC = () => {
             New Post
           </Button>
         </Stack>
-
         <Stack
           mb={5}
           direction="row"
@@ -57,7 +56,7 @@ const Blog: React.FC = () => {
         </Stack>
 
         <Grid container spacing={3}>
-          {POSTS.map((post, index) => (
+          {POSTS.map((post: any, index: number) => (
             <BlogPostCard key={post.id} post={post} index={index} />
           ))}
         </Grid>
@@ -66,4 +65,4 @@ const Blog: React.FC = () => {
   );
 };
 
-export default Blog
+export default Blog;

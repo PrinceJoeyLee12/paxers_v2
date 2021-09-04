@@ -1,15 +1,17 @@
+import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@material-ui/core/styles';
 import { Card, Stack, Link, Container, Typography } from '@material-ui/core';
 // layouts
-import AuthLayout from '../layouts/AuthLayout';
+import AuthLayout from '../../layouts/AuthLayout';
 // components
-import Page from '../components/Page';
-import { MHidden } from '../components/@material-extend';
-import { LoginForm } from '../components/authentication/login';
-import AuthSocial from '../components/authentication/AuthSocial';
-
+import Page from '../molecules/PageHelmet/Page';
+import { MHidden } from '../atoms/@material-extend';
+import LoginForm from '../organisms/Authentication/LoginForm';
+import AuthSocial from '../organisms/Authentication/AuthSocial';
+import { getPageTitle, getPath } from '../../utils/routes';
+import { Routes } from '../../constants';
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
@@ -37,11 +39,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(12, 0),
 }));
 
-// ----------------------------------------------------------------------
+interface Props {
+  firstName: string;
+}
 
-const Login: React.FC = () => {
+const Login: React.FC<Props> = ({ firstName }) => {
   return (
-    <RootStyle title="Login | Minimal-UI">
+    <RootStyle title={getPageTitle(getPath(Routes.LOGIN))}>
       <AuthLayout>
         Don’t have an account? &nbsp;
         <Link
@@ -67,12 +71,13 @@ const Login: React.FC = () => {
         <ContentStyle>
           <Stack sx={{ mb: 5 }}>
             <Typography variant="h4" gutterBottom>
-              Sign in to Minimal
+              Sign in to Paxers
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
               Enter your details below.
             </Typography>
           </Stack>
+
           <AuthSocial />
 
           <LoginForm />
@@ -80,7 +85,11 @@ const Login: React.FC = () => {
           <MHidden width="smUp">
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
               Don’t have an account?&nbsp;
-              <Link variant="subtitle2" component={RouterLink} to="register">
+              <Link
+                variant="subtitle2"
+                component={RouterLink}
+                to={getPath(Routes.REGISTER)}
+              >
                 Get started
               </Link>
             </Typography>

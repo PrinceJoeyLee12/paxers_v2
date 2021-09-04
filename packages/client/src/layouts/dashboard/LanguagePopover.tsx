@@ -9,7 +9,7 @@ import {
   IconButton,
 } from '@material-ui/core';
 // components
-import MenuPopover from '../../components/MenuPopover';
+import MenuPopover from '../../components/molecules/MenuPopover/MenuPopover';
 
 // ----------------------------------------------------------------------
 
@@ -57,8 +57,8 @@ const LanguagePopover: React.FC = () => {
           ...(open && {
             bgcolor: (theme) =>
               alpha(
-                theme.palette.primary.main,
-                theme.palette.action.focusOpacity
+                theme.palette?.primary.main,
+                theme.palette?.action.focusOpacity
               ),
           }),
         }}
