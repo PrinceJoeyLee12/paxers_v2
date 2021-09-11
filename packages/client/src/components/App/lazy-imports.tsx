@@ -4,6 +4,17 @@ import Loadable from 'react-loadable';
 
 const Loading = () => <Loader active content="Loading" />;
 
+export const AppContainer = Loadable({
+  loader: async () => {
+    const module = await import(
+      /* webpackChunkName: "AppContainer" */ '../../containers/AppContainer'
+    );
+    return module.AppContainer;
+  },
+  loading: Loading,
+  modules: ['AppContainer'],
+});
+
 export const PageLoginContainer = Loadable({
   loader: async () => {
     const module = await import(

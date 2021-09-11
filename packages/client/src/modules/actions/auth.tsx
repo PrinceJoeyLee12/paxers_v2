@@ -71,7 +71,7 @@ export const register =
         payload: res.data,
       });
       dispatch(loadUser());
-    } catch (err) {
+    } catch (err: any) {
       setResponse(
         err.response.data.msg,
         err.response.status,
@@ -120,7 +120,7 @@ export const forgotPassword =
         res.status,
         {}
       );
-    } catch (err) {
+    } catch (err: any) {
       setResponse(
         err.response.data.msg,
         err.response.status,
@@ -144,7 +144,7 @@ export const resetPassword =
         'You successfully reset your password try to login.',
         res.status
       );
-    } catch (err) {
+    } catch (err: any) {
       setResponse(err.response.data.msg, err.response.status);
     }
   };

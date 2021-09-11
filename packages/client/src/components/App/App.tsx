@@ -1,24 +1,13 @@
-import React, { Fragment, useEffect } from 'react';
-import { Router as ReactRouter } from 'react-router-dom-v5';
+import React, { useEffect } from 'react';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 import './App.css';
 
-import { ApolloProvider } from '@apollo/client/react';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import Routes from '../routing/Routes';
-
 //Redux
-import { Provider } from 'react-redux';
 import { configureStore } from '../../store';
-
 //Actions
 import setAuthToken from '../../utils/setAuthToken';
-import { loadUser } from '../../modules/actions/auth';
-import { LOGOUT } from '../../modules/actions/types';
-
 // routes
-import Router from './routes';
-// theme
-import ThemeConfig from '../../theme';
+import { UserRouter } from './routes';
 // components
 import ScrollToTop from '../atoms/ScrollToTop/ScrollToTop';
 
@@ -32,6 +21,7 @@ const App: React.FC = () => {
 
   //Check Token
   useEffect(() => {
+    console.log('called');
     if (localStorage.token) {
       setAuthToken(localStorage.token);
       //store.dispatch(loadUser());
@@ -46,34 +36,10 @@ const App: React.FC = () => {
   }, []);
   return (
     <div className="App">
-      <Provider store={store}>
-        <ApolloProvider client={client}>
-          <ThemeConfig>
-            <ScrollToTop />
-            <Router />
-          </ThemeConfig>
-        </ApolloProvider>
-      </Provider>
+      <ScrollToTop />
+      <UserRouter />
     </div>
   );
 };
 
 export default App;
-
-// return (
-//   <div className="App">
-//     <Provider store={store}>
-//       <ApolloProvider client={client}>
-//         <Router>
-//           {/* <Navbar> */}
-//           <Fragment>
-//             <Switch>
-//               <Route component={Routes} />
-//             </Switch>
-//           </Fragment>
-//           {/* </Navbar> */}
-//         </Router>
-//       </ApolloProvider>
-//     </Provider>
-//   </div>
-// );

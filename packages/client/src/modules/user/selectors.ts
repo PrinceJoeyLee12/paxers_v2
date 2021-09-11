@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { store } from '../../store';
 
 const rootSelector = createSelector(
   (state: State.Root) => state.user,
@@ -13,4 +14,9 @@ export const userDataSelector = createSelector(
 export const firstNameSelector = createSelector(
   [userDataSelector],
   (userData: State.UserData): string => userData.firstName
+);
+
+export const tokenSelector = createSelector(
+  [rootSelector],
+  (user: State.User): string | null => user.token
 );

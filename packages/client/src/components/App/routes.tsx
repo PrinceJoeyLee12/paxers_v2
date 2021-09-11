@@ -18,7 +18,8 @@ import {
   PageForgotPasswordContainer,
   PageRegisterContainer,
 } from './lazy-imports';
-export default function Router() {
+
+export const UserRouter: any = () => {
   return useRoutes([
     {
       path: '/dashboard',
@@ -50,4 +51,39 @@ export default function Router() {
     },
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
-}
+};
+
+// TODO to be edited
+export const AdminRouter: any = () => {
+  return useRoutes([
+    {
+      path: '/dashboard',
+      element: (
+        <div>
+          <DashboardLayout />
+        </div>
+      ),
+      children: [
+        { path: '/', element: <Navigate to="/dashboard/app" replace /> },
+        { path: 'app', element: <DashboardApp /> },
+        { path: 'user', element: <User /> },
+        { path: 'products', element: <Products /> },
+        { path: 'blog', element: <Blog /> },
+      ],
+    },
+    {
+      path: '/',
+      element: <LogoOnlyLayout />,
+      children: [
+        { path: 'login', element: <PageLoginContainer /> },
+        { path: 'register', element: <PageRegisterContainer /> },
+        { path: 'reset-password', element: <PageResetPasswordContainer /> },
+        { path: 'forgot-password', element: <PageForgotPasswordContainer /> },
+        { path: '404', element: <NotFound /> },
+        { path: '/', element: <Navigate to="/dashboard" /> },
+        { path: '*', element: <Navigate to="/404" /> },
+      ],
+    },
+    { path: '*', element: <Navigate to="/404" replace /> },
+  ]);
+};
