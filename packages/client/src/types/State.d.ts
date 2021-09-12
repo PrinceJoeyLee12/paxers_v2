@@ -7,6 +7,7 @@ declare module State {
   interface User {
     data: UserData;
     token: string | null;
+    isAuthenticated: boolean;
     error: string | null;
     loading: boolean;
   }

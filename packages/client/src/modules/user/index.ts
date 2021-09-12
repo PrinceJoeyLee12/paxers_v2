@@ -7,6 +7,7 @@ const initialState: State.User = {
     firstName: '',
     lastName: '',
   },
+  isAuthenticated: true,
   token: '',
   error: null,
   loading: false,

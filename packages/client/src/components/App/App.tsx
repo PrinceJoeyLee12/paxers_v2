@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { useSelector } from 'react-redux';
+import { isAuthenticatedSelector } from '../../modules/user/selectors';
 import './App.css';
 
-//Redux
-import { configureStore } from '../../store';
 //Actions
 import setAuthToken from '../../utils/setAuthToken';
 // routes
@@ -17,11 +17,10 @@ export const client = new ApolloClient({
 });
 
 const App: React.FC = () => {
-  const { store, history } = configureStore();
+  const isAuthenticated = useSelector(isAuthenticatedSelector);
 
   //Check Token
   useEffect(() => {
-    console.log('called');
     if (localStorage.token) {
       setAuthToken(localStorage.token);
       //store.dispatch(loadUser());
@@ -37,7 +36,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <ScrollToTop />
-      <UserRouter />
+      {UserRouter(isAuthenticated)}
     </div>
   );
 };

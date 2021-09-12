@@ -81,3 +81,7 @@ export const sortByOptions = {
     value: 'alphabetical',
   },
 };
+
+export enum AdminRoles {
+  ADMIN = 'admin',
+}

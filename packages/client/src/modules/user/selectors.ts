@@ -20,3 +20,8 @@ export const tokenSelector = createSelector(
   [rootSelector],
   (user: State.User): string | null => user.token
 );
+
+export const isAuthenticatedSelector = createSelector(
+  [rootSelector],
+  (user: State.User): boolean => user.isAuthenticated
+);

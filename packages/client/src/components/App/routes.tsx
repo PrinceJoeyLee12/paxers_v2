@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
+import { AdminRoles } from '../../constants';
 // layouts
 import DashboardLayout from '../../layouts/dashboard';
 import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
@@ -19,14 +20,14 @@ import {
   PageRegisterContainer,
 } from './lazy-imports';
 
-export const UserRouter: any = () => {
+export const UserRouter: any = (isAuthenticated: boolean) => {
   return useRoutes([
     {
       path: '/dashboard',
-      element: (
-        <div>
-          <DashboardLayout />
-        </div>
+      element: isAuthenticated ? (
+        <DashboardLayout />
+      ) : (
+        <Navigate to="/login" replace />
       ),
       children: [
         { path: '/', element: <Navigate to="/dashboard/app" replace /> },
@@ -38,14 +39,17 @@ export const UserRouter: any = () => {
     },
     {
       path: '/',
-      element: <LogoOnlyLayout />,
+      element: !isAuthenticated ? (
+        <LogoOnlyLayout />
+      ) : (
+        <Navigate to="/dashboard" />
+      ),
       children: [
+        { path: '/', element: <PageLoginContainer /> },
         { path: 'login', element: <PageLoginContainer /> },
         { path: 'register', element: <PageRegisterContainer /> },
         { path: 'reset-password', element: <PageResetPasswordContainer /> },
         { path: 'forgot-password', element: <PageForgotPasswordContainer /> },
-        { path: '404', element: <NotFound /> },
-        { path: '/', element: <Navigate to="/dashboard" /> },
         { path: '*', element: <Navigate to="/404" /> },
       ],
     },
@@ -58,11 +62,7 @@ export const AdminRouter: any = () => {
   return useRoutes([
     {
       path: '/dashboard',
-      element: (
-        <div>
-          <DashboardLayout />
-        </div>
-      ),
+      element: <DashboardLayout />,
       children: [
         { path: '/', element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <DashboardApp /> },

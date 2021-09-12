@@ -1,6 +1,5 @@
 import { createAction } from 'redux-actions';
 import { Dispatch } from 'redux';
-import { tokenSelector } from './selectors';
 import { clearLocalStorage } from '../../utils/localStorage';
 
 export const getUserData: any = createAction(
